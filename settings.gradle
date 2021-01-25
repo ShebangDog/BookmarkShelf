@@ -1,0 +1,5 @@
+include ':model'
+include ':env'
+include ':data'
+include ':app'
+rootProject.name = "BookmarkShelf"
