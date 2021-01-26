@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "285311194197",
+    "project_id": "bookmarkshelf-957c6",
+    "storage_bucket": "bookmarkshelf-957c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285311194197:android:c78318efcaac51ae40b0dc",
+        "android_client_info": {
+          "package_name": "dog.shebang.data"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285311194197-gv5b3u21dsneno7boff0ha59r6snu640.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDq0ddYSUS9AVm6fPFKku_HQJ4w1bUPdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "285311194197-gv5b3u21dsneno7boff0ha59r6snu640.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

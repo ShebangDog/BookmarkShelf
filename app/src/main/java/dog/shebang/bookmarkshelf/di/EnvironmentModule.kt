@@ -9,7 +9,7 @@ import dog.shebang.env.Environment
 
 @Module
 @InstallIn(ApplicationComponent::class)
-class EnvironmentModule {
+object EnvironmentModule {
 
     @Provides
     fun provideEnvironment(): Environment {
