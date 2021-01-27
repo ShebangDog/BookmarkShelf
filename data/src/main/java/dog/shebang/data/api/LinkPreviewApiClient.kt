@@ -4,12 +4,13 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.components.ApplicationComponent
 import dog.shebang.data.di.LinkPreviewApiKey
 import dog.shebang.model.Metadata
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
+import javax.inject.Singleton
 
 interface LinkPreviewApiClient {
     suspend fun fetchMetadata(url: String): Metadata
@@ -26,9 +27,10 @@ class LinkPreviewApiClientImpl @Inject constructor(
 }
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(ApplicationComponent::class)
 abstract class LinkPreviewApiModule {
 
+    @Singleton
     @Binds
     abstract fun bindLinkPreviewApiClient(
         linkPreviewApiClientImpl: LinkPreviewApiClientImpl
@@ -37,11 +39,12 @@ abstract class LinkPreviewApiModule {
 }
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(ApplicationComponent::class)
 object LinkPreviewApiClientModule {
 
     private const val baseUrl = "https://api.linkpreview.net/"
 
+    @Singleton
     @Provides
     fun provideLinkPreviewApi(): LinkPreviewApi = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())

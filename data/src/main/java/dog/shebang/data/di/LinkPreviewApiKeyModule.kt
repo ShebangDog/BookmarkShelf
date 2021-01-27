@@ -3,14 +3,16 @@ package dog.shebang.data.di
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.components.ApplicationComponent
 import dog.shebang.env.Environment
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(ApplicationComponent::class)
 abstract class LinkPreviewApiKeyModule {
 
+    @Singleton
     @Binds
     abstract fun bindLinkPreviewApiKey(
         linkPreviewApiKeyImpl: LinkPreviewApiKeyImpl
