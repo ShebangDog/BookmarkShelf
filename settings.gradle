@@ -1,3 +1,4 @@
+include ':core:component'
 include ':model'
 include ':env'
 include ':data'
