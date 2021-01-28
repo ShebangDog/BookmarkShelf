@@ -1,16 +1,8 @@
 package dog.shebang.data.api
 
-import dagger.Binds
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import dog.shebang.data.di.LinkPreviewApiKey
+import dog.shebang.env.Environment
 import dog.shebang.model.Metadata
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
-import javax.inject.Singleton
 
 interface LinkPreviewApiClient {
     suspend fun fetchMetadata(url: String): Metadata
@@ -26,30 +18,15 @@ class LinkPreviewApiClientImpl @Inject constructor(
 
 }
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class LinkPreviewApiModule {
+interface LinkPreviewApiKey {
 
-    @Singleton
-    @Binds
-    abstract fun bindLinkPreviewApiClient(
-        linkPreviewApiClientImpl: LinkPreviewApiClientImpl
-    ): LinkPreviewApiClient
-
+    val apiKey: String
 }
 
-@Module
-@InstallIn(SingletonComponent::class)
-object LinkPreviewApiClientModule {
+class LinkPreviewApiKeyImpl @Inject constructor(
+    private val environment: Environment
+) : LinkPreviewApiKey {
 
-    private const val baseUrl = "https://api.linkpreview.net/"
-
-    @Singleton
-    @Provides
-    fun provideLinkPreviewApi(): LinkPreviewApi = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(baseUrl)
-        .build()
-        .create(LinkPreviewApi::class.java)
-
+    override val apiKey: String
+        get() = environment.linkPreviewApiKey
 }
