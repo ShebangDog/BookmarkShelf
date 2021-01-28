@@ -3,7 +3,7 @@ package dog.shebang.data
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import dog.shebang.data.api.LinkPreviewApiClient
 import dog.shebang.model.Metadata
 import kotlinx.coroutines.flow.Flow
@@ -30,7 +30,7 @@ class RemoteMetadataDataSourceImpl @Inject constructor(
 }
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 abstract class RemoteMetadataDataSourceModule {
 
     @Singleton

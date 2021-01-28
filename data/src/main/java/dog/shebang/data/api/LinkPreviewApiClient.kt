@@ -4,7 +4,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import dog.shebang.data.di.LinkPreviewApiKey
 import dog.shebang.model.Metadata
 import retrofit2.Retrofit
@@ -27,7 +27,7 @@ class LinkPreviewApiClientImpl @Inject constructor(
 }
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 abstract class LinkPreviewApiModule {
 
     @Singleton
@@ -39,7 +39,7 @@ abstract class LinkPreviewApiModule {
 }
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object LinkPreviewApiClientModule {
 
     private const val baseUrl = "https://api.linkpreview.net/"
