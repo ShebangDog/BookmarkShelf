@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -27,6 +28,7 @@ android {
 
         debug {
             buildConfigField "String", "LINK_PREVIEW_API_KEY", LINK_PREVIEW_API_KEY
+            buildConfigField "String", "FIRESTORE_USER_ID", FIRESTORE_USER_ID
         }
     }
 
@@ -83,5 +85,15 @@ dependencies {
     kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
 
     implementation 'com.github.wada811:ViewBinding-ktx:1.1.1'
+
+    implementation platform('com.google.firebase:firebase-bom:26.3.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    // Declare the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-auth-ktx'
+
+    // Also declare the dependency for the Google Play services library and specify its version
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
 }
