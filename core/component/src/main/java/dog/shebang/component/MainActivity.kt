@@ -1,4 +1,4 @@
-package dog.shebang.bookmarkshelf
+package dog.shebang.component
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,19 +6,18 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.wada811.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import dog.shebang.bookmarkshelf.databinding.ActivityMainBinding
+import dog.shebang.component.databinding.ActivityMainBinding
 import dog.shebang.data.firestore.FirebaseAuthentication
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val binding: ActivityMainBinding by viewBinding()
 
-    private lateinit var auth: FirebaseAuth
+    private lateinit var auth: com.google.firebase.auth.FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +42,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun showSignInIntent() {
         val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, FirebaseAuthentication.GOOGLE_AUTH_INTENT_REQUEST)
+        startActivityForResult(
+            signInIntent,
+            FirebaseAuthentication.GOOGLE_AUTH_INTENT_REQUEST
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

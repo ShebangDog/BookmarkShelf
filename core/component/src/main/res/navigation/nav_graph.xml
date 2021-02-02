@@ -2,11 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/postActivity">
+    app:startDestination="@id/shelfFragment">
 
-    <activity
-        android:id="@+id/postActivity"
-        android:name="dog.shebang.post.PostActivity"
-        android:label="PostActivity" />
+    <fragment
+        android:id="@+id/shelfFragment"
+        android:name="dog.shebang.shelf.ShelfFragment"
+        android:label="ShelfFragment" />
 
 </navigation>
