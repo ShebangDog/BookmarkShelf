@@ -18,6 +18,9 @@ object EnvironmentModule {
         return object : Environment {
             override val linkPreviewApiKey: String
                 get() = BuildConfig.LINK_PREVIEW_API_KEY
+
+            override val userId: String
+                get() = BuildConfig.FIRESTORE_USER_ID
         }
     }
 }
