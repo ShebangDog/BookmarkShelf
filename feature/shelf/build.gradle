@@ -19,6 +19,10 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -35,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation project(":core:component")
     implementation project(":model")
     implementation project(":data")
 
@@ -46,15 +51,25 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation "com.google.dagger:hilt-android:2.28-alpha"
-    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
-
-    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
-    // When using Kotlin.
-    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
+    implementation 'com.github.wada811:ViewBinding-ktx:1.1.1'
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2"
 
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+
+    def nav_version = "2.3.2"
+    // Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // Feature module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+
+    implementation 'com.google.dagger:hilt-android:2.31-alpha'
+    kapt 'com.google.dagger:hilt-android-compiler:2.31-alpha'
+
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha03'
+
 }

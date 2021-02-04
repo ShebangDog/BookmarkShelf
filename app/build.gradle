@@ -51,6 +51,7 @@ dependencies {
     implementation project(":model")
     implementation project(":env")
     implementation project(":feature:post")
+    implementation project(":feature:shelf")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
