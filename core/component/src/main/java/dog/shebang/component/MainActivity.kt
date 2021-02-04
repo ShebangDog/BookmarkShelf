@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.wada811.viewbinding.viewBinding
@@ -17,7 +18,7 @@ import dog.shebang.data.firestore.FirebaseAuthentication
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val binding: ActivityMainBinding by viewBinding()
 
-    private lateinit var auth: com.google.firebase.auth.FirebaseAuth
+    private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onStart() {
         super.onStart()
 
-        if (Firebase.auth.currentUser == null) {
+        if (auth.currentUser == null) {
             googleSignInClient = FirebaseAuthentication.getClient(
                 this,
                 getString(R.string.default_web_client_id)
