@@ -1,4 +1,4 @@
-package dog.shebang.component.ext
+package dog.shebang.core.ext
 
 import android.graphics.Rect
 import android.view.View
