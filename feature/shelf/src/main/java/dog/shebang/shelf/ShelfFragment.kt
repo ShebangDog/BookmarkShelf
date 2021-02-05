@@ -1,5 +1,6 @@
 package dog.shebang.shelf
 
+import BindableItemProvider
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -14,6 +15,8 @@ import dog.shebang.component.databinding.LayoutBookmarkCardBinding
 import dog.shebang.component.ext.setSpan
 import dog.shebang.shelf.databinding.FragmentShelfBinding
 import dog.shebang.shelf.item.DefaultPreviewItem
+import dog.shebang.shelf.item.ItemType
+import dog.shebang.shelf.item.TwitterPreviewItem
 
 @AndroidEntryPoint
 class ShelfFragment : Fragment(R.layout.fragment_shelf) {
@@ -33,8 +36,17 @@ class ShelfFragment : Fragment(R.layout.fragment_shelf) {
         }
 
         viewModel.bookmarkListLiveData.observe(viewLifecycleOwner) { bookmarkList ->
+
+            val bindableItemProvider: BindableItemProvider = { bookmark, listener ->
+                when (Url.parseDataType(bookmark.metadata.url)) {
+                    is ItemType.Twitter -> TwitterPreviewItem(bookmark, listener)
+                    is ItemType.Facebook -> DefaultPreviewItem(bookmark, listener)
+                    is ItemType.None -> DefaultPreviewItem(bookmark, listener)
+                }
+            }
+
             val bookmarkItemList = bookmarkList.map {
-                DefaultPreviewItem(it) { _, url -> browse(url) }
+                bindableItemProvider(it) { _, url -> browse(url) }
             }
 
             adapter.update(bookmarkItemList)
@@ -45,5 +57,18 @@ class ShelfFragment : Fragment(R.layout.fragment_shelf) {
         val browseIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
 
         startActivity(browseIntent)
+    }
+}
+
+object Url {
+
+    fun parseDataType(url: String): ItemType {
+        val host = Uri.parse(url).host ?: return ItemType.None
+
+        ItemType.itemList.forEach {
+            if (host.contains(it.type)) return it
+        }
+
+        return ItemType.None
     }
 }
