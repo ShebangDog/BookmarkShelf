@@ -27,7 +27,6 @@ android {
 
         debug {
             buildConfigField "String", "LINK_PREVIEW_API_KEY", LINK_PREVIEW_API_KEY
-            buildConfigField "String", "FIRESTORE_USER_ID", FIRESTORE_USER_ID
         }
     }
 

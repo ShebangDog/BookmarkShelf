@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 interface RemoteFirestoreDataSource {
 
-    fun fetchBookmark(): Flow<Bookmark>
+    fun fetchBookmarkList(): Flow<List<Bookmark>>
 
     suspend fun storeBookmark(bookmark: Bookmark)
 }
@@ -16,7 +16,7 @@ class RemoteFirestoreDataSourceImpl @Inject constructor(
     private val bookmarkFirestore: BookmarkFirestore
 ) : RemoteFirestoreDataSource {
 
-    override fun fetchBookmark(): Flow<Bookmark> = bookmarkFirestore.fetchBookmark()
+    override fun fetchBookmarkList(): Flow<List<Bookmark>> = bookmarkFirestore.fetchBookmarkList()
 
     override suspend fun storeBookmark(bookmark: Bookmark) {
         bookmarkFirestore.storeBookmark(bookmark)
