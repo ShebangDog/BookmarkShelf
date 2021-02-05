@@ -3,13 +3,13 @@ package dog.shebang.bookmarkshelf.di
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import dog.shebang.bookmarkshelf.BuildConfig
 import dog.shebang.env.Environment
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object EnvironmentModule {
 
     @Singleton
