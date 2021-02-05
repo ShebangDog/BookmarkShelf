@@ -1,4 +1,3 @@
-include ':core:ext'
 include ':feature:post'
 include ':feature:shelf'
 include ':core:component'
