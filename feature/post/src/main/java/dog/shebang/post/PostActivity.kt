@@ -2,12 +2,12 @@ package dog.shebang.post
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.wada811.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import dog.shebang.component.MainActivity
 import dog.shebang.post.databinding.ActivityPostBinding
 import javax.inject.Inject
 
@@ -42,8 +42,7 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
 
         binding.addButton.setOnClickListener {
             viewModel.storeBookmark()
-            Toast.makeText(this, viewModel.metadataLiveData.value?.title, Toast.LENGTH_LONG)
-                .show()
+            startActivity(Intent(this, MainActivity::class.java))
         }
 
     }
