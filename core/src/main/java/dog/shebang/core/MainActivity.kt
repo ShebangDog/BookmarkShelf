@@ -1,4 +1,4 @@
-package dog.shebang.component
+package dog.shebang.core
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.wada811.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import dog.shebang.component.databinding.ActivityMainBinding
+import dog.shebang.core.databinding.ActivityMainBinding
 import dog.shebang.data.firestore.FirebaseAuthentication
 
 @AndroidEntryPoint

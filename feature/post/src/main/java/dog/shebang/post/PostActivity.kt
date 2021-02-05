@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.wada811.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import dog.shebang.component.MainActivity
+import dog.shebang.core.MainActivity
 import dog.shebang.post.databinding.ActivityPostBinding
 import javax.inject.Inject
 

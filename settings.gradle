@@ -1,6 +1,6 @@
+include ':core'
 include ':feature:post'
 include ':feature:shelf'
-include ':core:component'
 include ':model'
 include ':env'
 include ':data'

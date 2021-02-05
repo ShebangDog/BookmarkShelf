@@ -39,7 +39,7 @@ android {
 }
 
 dependencies {
-    implementation project(":core:component")
+    implementation project(":core")
     implementation project(":model")
     implementation project(":data")
 

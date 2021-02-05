@@ -3,7 +3,7 @@ package dog.shebang.shelf.item
 import android.view.View
 import com.bumptech.glide.Glide
 import com.xwray.groupie.viewbinding.BindableItem
-import dog.shebang.component.databinding.LayoutBookmarkCardBinding
+import dog.shebang.core.databinding.LayoutBookmarkCardBinding
 import dog.shebang.model.Bookmark
 import dog.shebang.shelf.R
 
