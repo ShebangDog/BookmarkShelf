@@ -1,6 +1,7 @@
 include ':core'
 include ':feature:post'
 include ':feature:shelf'
+include ':feature:category'
 include ':model'
 include ':env'
 include ':data'
