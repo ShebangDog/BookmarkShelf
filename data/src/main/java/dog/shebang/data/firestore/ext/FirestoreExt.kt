@@ -6,3 +6,8 @@ fun FirebaseFirestore.bookmarksRef(uid: String) = this
     .collection(FirestoreConstants.Users)
     .document(uid)
     .collection(FirestoreConstants.Bookmarks)
+
+fun FirebaseFirestore.categoriesRef(uid: String) = this
+    .collection(FirestoreConstants.Users)
+    .document(uid)
+    .collection(FirestoreConstants.Categories)
