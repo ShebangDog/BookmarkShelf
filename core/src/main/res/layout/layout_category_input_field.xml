@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorDarkWhite"
+    android:id="@+id/text_field_linear_layout"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:paddingHorizontal="16dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:hint="@string/hint_category"
+        android:id="@+id/add_category_text_field_layout"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:paddingBottom="8dp"
+        app:counterEnabled="true"
+        app:endIconDrawable="@drawable/ic_sync"
+        app:endIconMode="custom">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:background="@drawable/shape_rounded_edit_text"
+            android:id="@+id/add_category_text_field"
+            android:inputType="text"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:maxLines="1">
+
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:id="@+id/add_category_button"
+        android:insetBottom="0dp"
+        android:insetLeft="0dp"
+        android:insetRight="0dp"
+        android:insetTop="0dp"
+        android:layout_height="@dimen/middle_icon"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="6dp"
+        android:layout_width="@dimen/middle_icon"
+        android:visibility="gone"
+        app:icon="@drawable/ic_add"
+        app:iconSize="24dp"
+        app:shapeAppearance="@style/ShapeAppearanceOverlay.MyApp.Button.Rounded" />
+
+</LinearLayout>

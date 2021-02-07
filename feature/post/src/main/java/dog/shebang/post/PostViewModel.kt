@@ -5,6 +5,7 @@ import androidx.savedstate.SavedStateRegistryOwner
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import dog.shebang.data.RemoteCategoryDataSource
 import dog.shebang.data.RemoteFirestoreDataSource
 import dog.shebang.data.RemoteMetadataDataSource
 import dog.shebang.model.Bookmark
@@ -15,6 +16,7 @@ import kotlinx.coroutines.launch
 class PostViewModel @AssistedInject constructor(
     private val remoteMetadataDataSource: RemoteMetadataDataSource,
     private val remoteFirestoreDataSource: RemoteFirestoreDataSource,
+    private val remoteCategoryDataSource: RemoteCategoryDataSource,
     @Assisted private val savedStateHandle: SavedStateHandle,
     @Assisted private val url: String?
 ) : ViewModel() {
@@ -25,11 +27,20 @@ class PostViewModel @AssistedInject constructor(
         emitSource(remoteMetadataDataSource.fetchMetadata(url).asLiveData())
     }
 
-    fun storeBookmark() = viewModelScope.launch {
-        val metadata = metadataLiveData.value ?: return@launch
-        val bookmark = Bookmark(metadata, Category("category"))
+    private val mutableCategoryLiveData = MutableLiveData<Category>()
+    val categoryLiveData: LiveData<Category> = mutableCategoryLiveData
 
+    fun storeBookmark(bookmark: Bookmark) = viewModelScope.launch {
         remoteFirestoreDataSource.storeBookmark(bookmark)
+    }
+
+    fun saveCategory(category: Category) = viewModelScope.launch {
+        remoteCategoryDataSource.saveCategory(category)
+        mutableCategoryLiveData.value = category
+    }
+
+    fun setCategory(category: Category) = viewModelScope.launch {
+        mutableCategoryLiveData.value = category
     }
 
     @AssistedFactory

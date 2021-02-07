@@ -8,6 +8,19 @@
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
+    <com.google.android.material.chip.Chip
+        android:id="@+id/category_chip"
+        style="@style/Widget.MaterialComponents.Chip.Action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_margin"
+        android:elevation="3dp"
+        android:text="category"
+        app:chipStrokeColor="@android:color/black"
+        app:chipStrokeWidth="1dp"
+        app:layout_constraintRight_toRightOf="@id/bookmark_card_layout"
+        app:layout_constraintTop_toTopOf="@id/bookmark_card_layout" />
+
     <include
         android:id="@+id/bookmark_card_layout"
         layout="@layout/layout_bookmark_card"
