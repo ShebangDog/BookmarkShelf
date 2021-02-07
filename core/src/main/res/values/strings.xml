@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="description_of_preview_image">image of og tag</string>
+    <string name="android">android</string>
+    <string name="architect">architect</string>
+    <string name="select_category">Select Category</string>
+    <string name="reset">reset</string>
+    <string name="hint_category">create your own category</string>
 </resources>

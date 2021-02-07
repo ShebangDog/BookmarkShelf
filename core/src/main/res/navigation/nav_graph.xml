@@ -7,6 +7,27 @@
     <fragment
         android:id="@+id/shelfFragment"
         android:name="dog.shebang.shelf.ShelfFragment"
-        android:label="ShelfFragment" />
+        android:label="ShelfFragment">
+
+        <argument
+            android:name="categoryName"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <argument
+            android:name="categoryColor"
+            android:defaultValue="1"
+            app:argType="integer" />
+
+        <action
+            android:id="@+id/shelf_to_shelf"
+            app:destination="@id/shelfFragment" />
+
+    </fragment>
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="dog.shebang.category.MainActivity"
+        android:label="MainActivity"></activity>
 
 </navigation>
