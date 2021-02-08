@@ -37,7 +37,7 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
         super.onCreate(savedInstanceState)
 
         viewModel.metadataLiveData.observe(this) {
-            binding.bookmarkCardLayout.apply {
+            binding.apply {
                 titleTextView.text = it?.title
                 descriptionTextView.text = it?.description
 
