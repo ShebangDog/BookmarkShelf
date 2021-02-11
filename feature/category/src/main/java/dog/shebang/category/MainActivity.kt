@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         override fun onNavigationItemSelected(item: MenuItem): Boolean {
             item.isCheckable = true
-            navigationView.setCheckedItem(item.itemId)
+            item.isChecked = true
 
             val name = item.title.toString()
             val categoryList = viewModel.categoryList.value ?: return false
