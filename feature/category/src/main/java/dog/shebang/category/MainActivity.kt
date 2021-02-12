@@ -49,8 +49,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 viewModel
             )
 
-            categorySelectorNavigationView.setupWithNavController(navController)
-            categorySelectorNavigationView.setNavigationItemSelectedListener(listener)
+            categorySelectorNavigationView.apply {
+                setupWithNavController(navController)
+                setNavigationItemSelectedListener(listener)
+            }
+
+            topAppBar.setOnClickListener {
+                categoryDrawerLayout.open()
+            }
 
             viewModel.categoryList.observe(this@MainActivity) { categoryList ->
                 categorySelectorNavigationView.menu.clear()
