@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:285311194197:android:c78318efcaac51ae40b0dc",
         "android_client_info": {
-          "package_name": "dog.shebang.core"
+          "package_name": "dog.shebang.category"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "285311194197-a8ek3moctmlok1b2njhuab0fpm2cvbq2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "dog.shebang.core",
+            "package_name": "dog.shebang.category",
             "certificate_hash": "885ccaeb0e16733441da13463bc2c9a126bf9ae1"
           }
         },
