@@ -1,25 +1,34 @@
 package dog.shebang.data
 
 import dog.shebang.data.api.LinkPreviewApiClient
+import dog.shebang.model.LoadState
 import dog.shebang.model.Metadata
+import dog.shebang.model.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 interface RemoteMetadataDataSource {
 
-    fun fetchMetadata(url: String): Flow<Metadata?>
+    fun fetchMetadata(url: String): Flow<LoadState<Metadata>>
 }
 
 class RemoteMetadataDataSourceImpl @Inject constructor(
     private val linkPreviewApiClient: LinkPreviewApiClient
 ) : RemoteMetadataDataSource {
 
-    override fun fetchMetadata(url: String): Flow<Metadata?> = flow {
+    override fun fetchMetadata(url: String): Flow<LoadState<Metadata>> = flow {
+        emit(LoadState.Loading)
         try {
-            emit(linkPreviewApiClient.fetchMetadata(url))
-        } catch (exception: Exception) {
-            emit(null)
+            val state = when (val result = linkPreviewApiClient.fetchMetadata(url)) {
+                is Result.Success -> LoadState.Loaded(result.value)
+                is Result.Failure -> LoadState.Error(result.throwable)
+            }
+
+            emit(state)
+        } catch (throwable: Throwable) {
+            emit(LoadState.Error(throwable))
         }
+
     }
 }
