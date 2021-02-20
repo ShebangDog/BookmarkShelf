@@ -3,7 +3,7 @@ package dog.shebang.data.firestore
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import dog.shebang.data.entity.CategoryEntity
+import dog.shebang.data.firestore.entity.CategoryEntity
 import dog.shebang.data.firestore.ext.categoriesRef
 import dog.shebang.model.Category
 import kotlinx.coroutines.ExperimentalCoroutinesApi

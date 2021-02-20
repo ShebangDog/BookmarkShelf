@@ -1,4 +1,4 @@
-package dog.shebang.data.entity
+package dog.shebang.data.firestore.entity
 
 import dog.shebang.model.Metadata
 
