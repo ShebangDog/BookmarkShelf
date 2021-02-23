@@ -8,4 +8,11 @@ sealed class LoadState<out T> {
     fun ifIsLoaded(consumer: (T) -> Unit) {
         if (this is Loaded) consumer(value)
     }
+
+    fun <R> map(transform: (T) -> R): LoadState<R> = when (this) {
+        is Error -> Error(throwable)
+        is Loading -> Loading
+        is Loaded -> Loaded(transform(value))
+    }
+
 }
