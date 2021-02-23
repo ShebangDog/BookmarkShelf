@@ -16,6 +16,8 @@ import kotlinx.coroutines.flow.callbackFlow
 typealias AuthSuccessListener = (AuthResult) -> Unit
 typealias AuthFailureListener = (Exception) -> Unit
 
+object FirebaseNotLoggedException : Exception("you are not logged into the firebase")
+
 object FirebaseAuthentication {
     const val GOOGLE_AUTH_INTENT_REQUEST: Int = 773
     private val firebaseAuth = Firebase.auth
