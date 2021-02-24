@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 categoryDrawerLayout.open()
             }
 
-            viewModel.categoryList.observe(this@MainActivity) { categoryList ->
+            viewModel.categoryListLiveData.observe(this@MainActivity) { categoryList ->
                 categorySelectorNavigationView.menu.clear()
 
                 categoryList.forEachIndexed { index, category ->
@@ -121,10 +121,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             item.isCheckable = true
             item.isChecked = true
 
+            val categoryList = viewModel.categoryListLiveData.value ?: return true
             val name = item.title.toString()
-            val categoryList = viewModel.categoryList.value ?: return false
             val category = categoryList.first { it.value == name }
-            val action = ShelfFragmentDirections.shelfToShelf(category.value, category.color.value)
+            val action = ShelfFragmentDirections.shelfToShelf(
+                category.value, category.color.value
+            )
 
             navController.navigate(action)
             drawerLayout.closeDrawer(navigationView)

@@ -47,8 +47,10 @@ class CategoryBottomSheet(
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            viewModel.categoryListLiveData.observe(viewLifecycleOwner) {
-                updateChipGroup(chipGroup, it)
+            viewModel.categoryListLiveData.observe(viewLifecycleOwner) { loadState ->
+                loadState.ifIsLoaded {
+                    updateChipGroup(chipGroup, it)
+                }
             }
 
             layoutCategoryInputField.apply {
