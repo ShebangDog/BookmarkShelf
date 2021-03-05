@@ -1,4 +1,4 @@
-package dog.shebang.data.api
+package dog.shebang.data.api.entity
 
 import dog.shebang.model.Metadata
 

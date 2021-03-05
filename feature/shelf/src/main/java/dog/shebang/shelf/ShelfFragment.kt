@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -16,6 +17,7 @@ import dog.shebang.core.databinding.LayoutBookmarkCardBinding
 import dog.shebang.core.ext.setSpan
 import dog.shebang.model.Category
 import dog.shebang.model.Color
+import dog.shebang.model.LoadState
 import dog.shebang.shelf.databinding.FragmentShelfBinding
 import dog.shebang.shelf.item.DefaultPreviewItem
 import dog.shebang.shelf.item.ItemType
@@ -52,7 +54,7 @@ class ShelfFragment : Fragment(R.layout.fragment_shelf) {
             shelfRecyclerView.adapter = adapter
         }
 
-        viewModel.bookmarkListLiveData.observe(viewLifecycleOwner) { bookmarkList ->
+        viewModel.bookmarkListLiveData.observe(viewLifecycleOwner) { loadState ->
 
             val bindableItemProvider: BindableItemProvider = { bookmark, listener ->
                 when (Url.parseDataType(bookmark.metadata.url)) {
@@ -62,11 +64,24 @@ class ShelfFragment : Fragment(R.layout.fragment_shelf) {
                 }
             }
 
-            val bookmarkItemList = bookmarkList.map {
-                bindableItemProvider(it) { _, url -> browse(url) }
+            when (loadState) {
+                is LoadState.Error -> {
+                }
+                is LoadState.Loading -> {
+                    binding.progressBar.isVisible = true
+                }
+                is LoadState.Loaded -> {
+                    binding.progressBar.isVisible = false
+                }
             }
 
-            adapter.update(bookmarkItemList)
+            loadState.ifIsLoaded { bookmarkList ->
+                val bookmarkItemList = bookmarkList.map {
+                    bindableItemProvider(it) { _, url -> browse(url) }
+                }
+
+                adapter.update(bookmarkItemList)
+            }
         }
     }
 

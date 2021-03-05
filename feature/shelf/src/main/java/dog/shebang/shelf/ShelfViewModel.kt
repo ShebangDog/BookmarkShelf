@@ -19,9 +19,11 @@ class ShelfViewModel @AssistedInject constructor(
     private val isDefaultCategory = category.value == Category.defaultCategoryName
 
     val bookmarkListLiveData = remoteFirestoreDataSource.fetchBookmarkList()
-        .let { bookmarkFlowList ->
-            if (isDefaultCategory) bookmarkFlowList
-            else bookmarkFlowList.map { bookmarkList -> bookmarkList.filter { it.category.value == category.value } }
+        .map { loadState ->
+            loadState.map { bookmarkList ->
+                if (isDefaultCategory) bookmarkList
+                else bookmarkList.filter { it.category.value == category.value }
+            }
         }.asLiveData()
 
     @AssistedFactory

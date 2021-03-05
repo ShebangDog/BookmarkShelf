@@ -2,10 +2,11 @@ package dog.shebang.data.api
 
 import dog.shebang.env.Environment
 import dog.shebang.model.Metadata
+import dog.shebang.model.Result
 import javax.inject.Inject
 
 interface LinkPreviewApiClient {
-    suspend fun fetchMetadata(url: String): Metadata
+    suspend fun fetchMetadata(url: String): Result<Metadata>
 }
 
 class LinkPreviewApiClientImpl @Inject constructor(
@@ -13,8 +14,15 @@ class LinkPreviewApiClientImpl @Inject constructor(
     private val linkPreviewApiKey: LinkPreviewApiKey
 ) : LinkPreviewApiClient {
 
-    override suspend fun fetchMetadata(url: String): Metadata =
-        linkPreviewApi.fetchMetadata(linkPreviewApiKey.apiKey, url).toModel()
+    override suspend fun fetchMetadata(url: String): Result<Metadata> {
+        val response = linkPreviewApi.fetchMetadata(linkPreviewApiKey.apiKey, url)
+
+        return try {
+            Result.Success(response.body()!!.toModel())
+        } catch (throwable: Throwable) {
+            Result.Failure(throwable)
+        }
+    }
 
 }
 
