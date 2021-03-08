@@ -4,8 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dog.shebang.data.RemoteFirestoreDataSource
-import dog.shebang.data.RemoteFirestoreDataSourceImpl
+import dog.shebang.data.FirestoreDefaultBookmarkDataSource
+import dog.shebang.data.FirestoreDefaultBookmarkDataSourceImpl
 import javax.inject.Singleton
 
 @Module
@@ -15,7 +15,7 @@ abstract class RemoteFirestoreDataSourceModule {
     @Singleton
     @Binds
     abstract fun bindRemoteFirestoreDataSource(
-        remoteFirestoreDataSourceImpl: RemoteFirestoreDataSourceImpl
-    ): RemoteFirestoreDataSource
+        remoteFirestoreDataSourceImpl: FirestoreDefaultBookmarkDataSourceImpl
+    ): FirestoreDefaultBookmarkDataSource
 
 }

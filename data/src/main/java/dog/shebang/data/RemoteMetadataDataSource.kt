@@ -10,14 +10,14 @@ import javax.inject.Inject
 
 interface RemoteMetadataDataSource {
 
-    fun fetchMetadata(url: String): Flow<LoadState<Metadata>>
+    fun fetchMetadata(url: String): Flow<LoadState<Metadata.DefaultMetadata>>
 }
 
 class RemoteMetadataDataSourceImpl @Inject constructor(
     private val linkPreviewApiClient: LinkPreviewApiClient
 ) : RemoteMetadataDataSource {
 
-    override fun fetchMetadata(url: String): Flow<LoadState<Metadata>> = flow {
+    override fun fetchMetadata(url: String): Flow<LoadState<Metadata.DefaultMetadata>> = flow {
         emit(LoadState.Loading)
         try {
             val state = when (val result = linkPreviewApiClient.fetchMetadata(url)) {

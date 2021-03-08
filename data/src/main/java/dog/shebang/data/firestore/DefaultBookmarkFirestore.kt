@@ -1,10 +1,12 @@
 package dog.shebang.data.firestore
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import dog.shebang.data.firestore.entity.BookmarkEntity
-import dog.shebang.data.firestore.ext.bookmarksRef
+import dog.shebang.data.firestore.entity.DefaultBookmarkEntity
+import dog.shebang.data.firestore.ext.defaultBookmarksRef
 import dog.shebang.model.Bookmark
 import dog.shebang.model.Result
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,32 +17,34 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
-interface BookmarkFirestore {
+interface DefaultBookmarkFirestore {
 
-    fun fetchBookmarkList(): Flow<Result<List<Bookmark>>>
+    fun fetchBookmarkList(): Flow<Result<List<Bookmark.DefaultBookmark>>>
 
-    suspend fun storeBookmark(bookmark: Bookmark)
+    suspend fun storeBookmark(bookmark: Bookmark.DefaultBookmark)
 }
 
-class BookmarkFirestoreImpl @Inject constructor() : BookmarkFirestore {
+class DefaultBookmarkFirestoreImpl @Inject constructor() : DefaultBookmarkFirestore {
 
     private val firestore = Firebase.firestore
 
     @ExperimentalCoroutinesApi
-    override fun fetchBookmarkList(): Flow<Result<List<Bookmark>>> = callbackFlow {
+    override fun fetchBookmarkList(): Flow<Result<List<Bookmark.DefaultBookmark>>> = callbackFlow {
         val listenerRegistration = try {
             val uid = Firebase.auth.currentUser?.uid ?: throw FirebaseNotLoggedException
 
-            firestore.bookmarksRef(uid)
+            firestore.defaultBookmarksRef(uid)
                 .addSnapshotListener { snapshot, exception ->
                     exception?.run { throw this }
 
-                    val entityList = snapshot?.toObjects(BookmarkEntity::class.java)
+                    val entityList = snapshot?.toObjects(DefaultBookmarkEntity::class.java)
 
+                    Log.d(TAG, "fetchBookmarkList Default: $entityList")
                     val bookmarkList = entityList
                         ?.mapNotNull { it.modelOrNull() }
                         ?: emptyList()
 
+                    Log.d(TAG, "fetchBookmarkList Default2: $bookmarkList")
                     offer(Result.Success(bookmarkList))
 
                 }
@@ -55,9 +59,10 @@ class BookmarkFirestoreImpl @Inject constructor() : BookmarkFirestore {
     }
 
     @ExperimentalCoroutinesApi
-    override suspend fun storeBookmark(bookmark: Bookmark) {
+    override suspend fun storeBookmark(bookmark: Bookmark.DefaultBookmark) {
         val uid = FirebaseAuthentication.currentUser.filterNotNull().first().uid
 
-        firestore.bookmarksRef(uid).add(bookmark)
+        firestore.defaultBookmarksRef(uid).add(bookmark)
     }
+
 }
