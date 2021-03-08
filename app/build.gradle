@@ -27,6 +27,7 @@ android {
 
         debug {
             buildConfigField "String", "LINK_PREVIEW_API_KEY", LINK_PREVIEW_API_KEY
+            buildConfigField "String", "TWITTER_BEARER_TOKEN", TWITTER_BEARER_TOKEN
         }
     }
 
@@ -70,5 +71,18 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
 
     implementation "androidx.fragment:fragment-ktx:1.2.5"
+
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
+
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.31.2-alpha'
+    // ...with Kotlin.
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.31.2-alpha'
+
+    // For Robolectric tests.
+    testImplementation 'com.google.dagger:hilt-android-testing:2.31.2-alpha'
+    // ...with Kotlin.
+    kaptTest 'com.google.dagger:hilt-android-compiler:2.31.2-alpha'
+    // ...with Java.
 
 }
