@@ -9,6 +9,6 @@ data class LinkPreviewMetadataEntity(
     val url: String
 ) {
 
-    fun toModel(): Metadata = Metadata(title, description, image, url)
+    fun toModel() = Metadata.DefaultMetadata(title, description, image, url)
 
 }
