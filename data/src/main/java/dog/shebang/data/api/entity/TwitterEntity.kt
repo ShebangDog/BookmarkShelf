@@ -6,14 +6,14 @@ object TwitterEntity {
 
     data class Tweet(
         val data: Data,
-        val includes: Includes?
+        val includes: Includes? = null
     ) {
 
         data class Data(
             val id: String,
             val text: String,
             val author_id: String,
-            val entities: Entities,
+            val entities: Entities?,
             val attachments: Attachments
         ) {
 
@@ -21,12 +21,12 @@ object TwitterEntity {
                 authorId = author_id,
                 id = id,
                 text = text,
-                previews = entities.urls.map { it.toModel() },
+                previews = entities?.urls?.map { it.toModel() }.orEmpty(),
                 medias = medias.map { it.toModel() },
             )
 
             data class Entities(
-                val urls: List<Url>,
+                val urls: List<Url>?,
             ) {
 
                 data class Url(
@@ -90,11 +90,14 @@ object TwitterEntity {
             }
         }
 
-        fun toModel() = Twitter.Tweet(
-            data = data.toModel(
-                medias = includes?.media.orEmpty()
+        fun toModel(): Twitter.Tweet {
+
+            return Twitter.Tweet(
+                data = data.toModel(
+                    medias = includes?.media.orEmpty()
+                )
             )
-        )
+        }
     }
 
     data class UserData(
