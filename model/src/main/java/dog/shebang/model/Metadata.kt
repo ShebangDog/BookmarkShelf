@@ -2,7 +2,7 @@ package dog.shebang.model
 
 import android.net.Uri
 
-sealed class Metadata(open val url: String) {
+sealed class Metadata(open val url: String?) {
 
     data class DefaultMetadata(
         val title: String?,
@@ -15,8 +15,8 @@ sealed class Metadata(open val url: String) {
         val authorName: String,
         val authorProfileUrl: String,
         val text: String,
-        val internal: DefaultMetadata
-    ) : Metadata(internal.url)
+        val internal: DefaultMetadata?
+    ) : Metadata(internal?.url)
 
     sealed class Type(val value: String) {
 
