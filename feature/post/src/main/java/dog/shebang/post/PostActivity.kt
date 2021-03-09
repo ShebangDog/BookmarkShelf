@@ -12,9 +12,7 @@ import com.wada811.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dog.shebang.core.component.CategoryBottomSheet
 import dog.shebang.core.ext.Navigator
-import dog.shebang.model.Bookmark
-import dog.shebang.model.Category
-import dog.shebang.model.LoadState
+import dog.shebang.model.*
 import dog.shebang.post.databinding.ActivityPostBinding
 import javax.inject.Inject
 
@@ -45,20 +43,43 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
                 when (loadState) {
                     is LoadState.Error -> Log.d(
                         "LoadState",
-                        "onCreate: ${loadState.throwable.cause?.message}"
+                        "onCreate: error ${loadState.throwable.cause?.message}"
                     )
                     is LoadState.Loading -> imageProgressBar.isVisible = true
                     is LoadState.Loaded -> {
-                        val metadata = loadState.value
-
                         imageProgressBar.isVisible = false
 
-                        titleTextView.text = metadata.title
-                        descriptionTextView.text = metadata.description
+                        when (val metadata = loadState.value) {
+                            is Metadata.DefaultMetadata -> {
+                                titleTextView.text = metadata.title
+                                descriptionTextView.text = metadata.description
 
-                        Glide.with(this@PostActivity)
-                            .load(metadata.image)
-                            .into(imageView)
+                                Glide.with(this@PostActivity)
+                                    .load(metadata.previewImageUrl)
+                                    .into(previewImageView)
+                            }
+
+                            is Metadata.TwitterMetadata -> {
+                                authorNameTextView.text = metadata.authorName
+                                descriptionTextView.text = metadata.text
+
+                                val imageUrl = metadata.internal?.let {
+                                    it.mediaImageUrl ?: it.previewImageUrl
+                                }
+
+                                Glide.with(this@PostActivity)
+                                    .load(imageUrl)
+                                    .into(previewImageView)
+
+                                previewImageView.isVisible =
+                                    metadata.internal?.previewImageUrl != null
+
+                                Glide.with(this@PostActivity)
+                                    .load(metadata.authorProfileUrl)
+                                    .circleCrop()
+                                    .into(profileImageView)
+                            }
+                        }
                     }
                 }
             }
@@ -71,7 +92,10 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
                 val category = viewModel.categoryLiveData.value ?: return@setOnClickListener
 
                 loadState.ifIsLoaded { metadata ->
-                    val bookmark = Bookmark(metadata, category)
+                    val bookmark = when (metadata) {
+                        is Metadata.DefaultMetadata -> Bookmark.DefaultBookmark(metadata, category)
+                        is Metadata.TwitterMetadata -> Bookmark.TwitterBookmark(metadata, category)
+                    }
 
                     viewModel.storeBookmark(bookmark)
 
