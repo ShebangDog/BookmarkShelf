@@ -15,8 +15,17 @@ sealed class Metadata(open val url: String?) {
         val authorName: String,
         val authorProfileUrl: String,
         val text: String,
-        val internal: DefaultMetadata?
-    ) : Metadata(internal?.url)
+        val internal: Metadata?
+    ) : Metadata(internal?.url) {
+
+        data class Metadata(
+            val title: String?,
+            val description: String?,
+            val previewImageUrl: String?,
+            val mediaImageUrl: String?,
+            val url: String,
+        )
+    }
 
     sealed class Type(val value: String) {
 
