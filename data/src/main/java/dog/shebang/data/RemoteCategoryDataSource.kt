@@ -22,8 +22,6 @@ class RemoteCategoryDataSourceImpl @Inject constructor(
 ) : RemoteCategoryDataSource {
 
     override fun fetchCategoryList(): Flow<LoadState<List<Category>>> = flow {
-        emit(LoadState.Loading)
-
         val loadStateFlow = categoryFirestore.fetchCategoryList().map { result ->
             when (result) {
                 is Result.Failure -> LoadState.Error(result.throwable)

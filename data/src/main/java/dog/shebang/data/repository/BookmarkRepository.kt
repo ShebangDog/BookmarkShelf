@@ -6,6 +6,7 @@ import dog.shebang.model.Bookmark
 import dog.shebang.model.LoadState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 interface BookmarkRepository {
@@ -34,7 +35,7 @@ class DefaultBookmarkRepository @Inject constructor(
             LoadState.map(defaultLoadState, twitterLoadState) { defaultList, twitterList ->
                 defaultList + twitterList
             }
-        }
+        }.onStart { emit(LoadState.Loading) }
     }
 
     override suspend fun storeBookmark(bookmark: Bookmark) {
