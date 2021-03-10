@@ -1,0 +1,971 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="fetchtweet" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1ad1c69f-6113-4a4f-b281-fb02b51e87c5" name="Default Changelist" comment="MetadataRepositoryを追加する">
+      <change beforePath="$PROJECT_DIR$/core/src/main/res/layout/layout_bookmark_card.xml" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/res/layout/layout_bookmark_card.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature/post/src/main/java/dog/shebang/post/PostActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/feature/post/src/main/java/dog/shebang/post/PostActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature/post/src/main/java/dog/shebang/post/PostViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/feature/post/src/main/java/dog/shebang/post/PostViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature/post/src/main/res/layout/activity_post.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature/post/src/main/res/layout/activity_post.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature/shelf/src/main/java/dog/shebang/shelf/ShelfFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/feature/shelf/src/main/java/dog/shebang/shelf/ShelfFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature/shelf/src/main/java/dog/shebang/shelf/ShelfViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/feature/shelf/src/main/java/dog/shebang/shelf/ShelfViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature/shelf/src/main/java/dog/shebang/shelf/item/DefaultPreviewItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/feature/shelf/src/main/java/dog/shebang/shelf/item/DefaultPreviewItem.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature/shelf/src/main/java/dog/shebang/shelf/item/TwitterPreviewItem.kt" beforeDir="false" afterPath="$PROJECT_DIR$/feature/shelf/src/main/java/dog/shebang/shelf/item/TwitterPreviewItem.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature/shelf/src/main/res/layout/layout_twitter_card.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature/shelf/src/main/res/layout/layout_twitter_card.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[192.168.12.5:43001]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/core/component">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="BookmarkShelf" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="BookmarkShelf" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="BookmarkShelf" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="component" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="BookmarkShelf" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="component" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="BookmarkShelf" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="component" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="BookmarkShelf" type="f1a62948:ProjectNode" />
+                <item name="core" type="2d1252cf:ModuleNode" />
+                <item name="component" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="layoutResourceFile_vertical" />
+        <option value="navigationResourceFile" />
+        <option value="Kotlin Object" />
+        <option value="resourceFile" />
+        <option value="valueResourceFile" />
+        <option value="Kotlin Interface" />
+        <option value="Class" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1nZAdKx1uZZfB3LyLlTZlj4MoOh" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="192.168.12.5:43001" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-03-08T16:42:07.080Z" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TODO_SCOPE" value="All Places" />
+    <property name="android-custom-viewC:/Users/ayumu/.gradle/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.1.0/f2bdf79e1977939817f54a9d3e2f6bc52b63bdd0/recyclerview-1.1.0-sources.jar!/androidx/recyclerview/widget/RecyclerView.java_SELECTED" value="RecyclerView" />
+    <property name="android-custom-viewC:/Users/ayumu/.gradle/caches/modules-2/files-2.1/com.google.android.material/material/1.2.1/37d55d5141066b3d118d24232fa7025b65eb3a74/material-1.2.1-sources.jar!/com/google/android/material/navigation/NavigationView.java_SELECTED" value="NavigationView" />
+    <property name="android-custom-viewC:/Users/ayumu/AppData/Local/Android/Sdk/sources/android-30/android/view/View.java_SELECTED" value="View" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/core/src/main/res/drawable" />
+    <property name="multi-representation-previewC:/Users/ayumu/.gradle/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.1.0/f2bdf79e1977939817f54a9d3e2f6bc52b63bdd0/recyclerview-1.1.0-sources.jar!/androidx/recyclerview/widget/RecyclerView.java_selected" value="Custom views" />
+    <property name="multi-representation-previewC:/Users/ayumu/.gradle/caches/modules-2/files-2.1/com.google.android.material/material/1.2.1/37d55d5141066b3d118d24232fa7025b65eb3a74/material-1.2.1-sources.jar!/com/google/android/material/navigation/NavigationView.java_selected" value="Custom views" />
+    <property name="multi-representation-previewC:/Users/ayumu/AppData/Local/Android/Sdk/sources/android-30/android/view/View.java_selected" value="Custom views" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.24492386" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
+  </component>
+  <component name="PsdUISettings">
+    <option name="MODULE_TAB" value="Signing Configs" />
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="dog.shebang.data.api.entity" />
+      <recent name="dog.shebang.shelf" />
+      <recent name="dog.shebang.bookmarkshelf" />
+      <recent name="dog.shebang.core" />
+      <recent name="dog.shebang.data.firestore" />
+    </key>
+    <key name="CreateKotlinClassDialog.RecentsKey">
+      <recent name="dog.shebang.env" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="dog.shebang.bookmarkshelf" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Document\Kotlin\BookmarkShelf\core\src\main\res\layout" />
+      <recent name="D:\Document\Kotlin\BookmarkShelf\core\src\main\res\values" />
+      <recent name="D:\Document\Kotlin\BookmarkShelf\app" />
+      <recent name="D:\Document\Kotlin\BookmarkShelf\feature\shelf\src\main\res\layout" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="dog.shebang.data.firestore" />
+      <recent name="dog.shebang.data" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Document\Kotlin\BookmarkShelf\core\src\main\res\drawable" />
+      <recent name="D:\Document\Kotlin\BookmarkShelf\app" />
+      <recent name="D:\Document\Kotlin\BookmarkShelf\core\component" />
+      <recent name="D:\Document\Kotlin\BookmarkShelf" />
+      <recent name="D:\Document\Kotlin\BookmarkShelf\data\src\main\java\dog\shebang\data\api" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Android App.app">
+    <configuration name="ExampleUnitTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="BookmarkShelf.app" />
+      <shortenClasspath name="CLASSPATH_FILE" />
+      <useClassPathOnly />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dog.shebang.bookmarkshelf.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dog.shebang.bookmarkshelf" />
+      <option name="MAIN_CLASS_NAME" value="dog.shebang.bookmarkshelf.ExampleUnitTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ExampleUnitTest.addition_isCorrect" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="BookmarkShelf.app" />
+      <shortenClasspath name="CLASSPATH_FILE" />
+      <useClassPathOnly />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dog.shebang.bookmarkshelf.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dog.shebang.bookmarkshelf" />
+      <option name="MAIN_CLASS_NAME" value="dog.shebang.bookmarkshelf.ExampleUnitTest" />
+      <option name="METHOD_NAME" value="addition_isCorrect" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ExampleUnitTest.addition_isCorsrect" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="BookmarkShelf.app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dog.shebang.bookmarkshelf.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dog.shebang.bookmarkshelf" />
+      <option name="MAIN_CLASS_NAME" value="dog.shebang.bookmarkshelf.ExampleUnitTest" />
+      <option name="METHOD_NAME" value="addition_isCorsrect" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="BookmarkShelf.app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="twitterApi()" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="BookmarkShelf.app" />
+      <option name="TESTING_TYPE" value="3" />
+      <option name="METHOD_NAME" value="twitterApi" />
+      <option name="CLASS_NAME" value="dog.shebang.bookmarkshelf.ExampleInstrumentedTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="INCLUDE_GRADLE_EXTRA_OPTIONS" value="true" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BookmarkShelf:core:component [processDebugGoogleServices]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/core/component" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="processDebugGoogleServices" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ExampleUnitTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="BookmarkShelf.data" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dog.shebang.data.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dog.shebang.data" />
+      <option name="MAIN_CLASS_NAME" value="dog.shebang.data.ExampleUnitTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Android App.app" />
+      <item itemvalue="Android JUnit.ExampleUnitTest" />
+      <item itemvalue="Android JUnit.ExampleUnitTest.addition_isCorsrect" />
+      <item itemvalue="Gradle.BookmarkShelf:core:component [processDebugGoogleServices]" />
+      <item itemvalue="Android JUnit.ExampleUnitTest.addition_isCorrect" />
+      <item itemvalue="Android Instrumented Tests.twitterApi()" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Android JUnit.ExampleUnitTest.addition_isCorrect" />
+        <item itemvalue="Android Instrumented Tests.twitterApi()" />
+        <item itemvalue="Android JUnit.ExampleUnitTest" />
+        <item itemvalue="Android JUnit.ExampleUnitTest.addition_isCorsrect" />
+        <item itemvalue="Gradle.BookmarkShelf:core:component [processDebugGoogleServices]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1ad1c69f-6113-4a4f-b281-fb02b51e87c5" name="Default Changelist" comment="" />
+      <changelist id="" name="test" comment="" />
+      <created>1611587324094</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1611587324094</updated>
+    </task>
+    <task id="LOCAL-00001" summary="initial commit">
+      <created>1611604403713</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1611604403713</updated>
+    </task>
+    <task id="LOCAL-00002" summary="クラスを別々のファイルに分ける">
+      <created>1611655346144</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1611655346144</updated>
+    </task>
+    <task id="LOCAL-00003" summary="リファクタリングする">
+      <created>1611693941738</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1611693941738</updated>
+    </task>
+    <task id="LOCAL-00004" summary="リファクタリングする">
+      <created>1611746026785</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1611746026787</updated>
+    </task>
+    <task id="LOCAL-00005" summary="リファクタリングする">
+      <created>1611748353884</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1611748353884</updated>
+    </task>
+    <task id="LOCAL-00006" summary="レイアウトを追加する">
+      <created>1611748624888</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1611748624888</updated>
+    </task>
+    <task id="LOCAL-00007" summary="プロトタイプを実装する">
+      <created>1611759647744</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1611759647744</updated>
+    </task>
+    <task id="LOCAL-00008" summary="core componentモジュールを追加する">
+      <created>1611777504252</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1611777504252</updated>
+    </task>
+    <task id="LOCAL-00009" summary="BookmarkCardをデザインする">
+      <created>1611777515102</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1611777515102</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Bookmarkクラスを追加する">
+      <created>1611779004852</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1611779004852</updated>
+    </task>
+    <task id="LOCAL-00011" summary="postモジュールを追加する">
+      <created>1611779286955</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1611779286955</updated>
+    </task>
+    <task id="LOCAL-00012" summary="postフラグメントを追加する">
+      <created>1611779674965</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1611779674965</updated>
+    </task>
+    <task id="LOCAL-00013" summary="navigationを追加する">
+      <created>1611780384030</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1611780384031</updated>
+    </task>
+    <task id="LOCAL-00014" summary="hiltのバージョンを上げる">
+      <created>1611864608757</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1611864608758</updated>
+    </task>
+    <task id="LOCAL-00015" summary="ブックマーク追加画面を作る">
+      <created>1611867433602</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1611867433602</updated>
+    </task>
+    <task id="LOCAL-00016" summary="リファクタリング">
+      <created>1611867651827</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1611867651827</updated>
+    </task>
+    <task id="LOCAL-00017" summary="save">
+      <created>1612066213696</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1612066213697</updated>
+    </task>
+    <task id="LOCAL-00018" summary="itemの形を設定する">
+      <created>1613048736171</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1613048736171</updated>
+    </task>
+    <task id="LOCAL-00019" summary="progress barを追加する">
+      <created>1613825507783</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1613825507783</updated>
+    </task>
+    <task id="LOCAL-00020" summary="progress barを追加する">
+      <created>1613826144396</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1613826144396</updated>
+    </task>
+    <task id="LOCAL-00021" summary="entityパッケージをつくる">
+      <created>1613828008876</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1613828008876</updated>
+    </task>
+    <task id="LOCAL-00022" summary="エラー処理できるようにする">
+      <created>1613835015402</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1613835015402</updated>
+    </task>
+    <task id="LOCAL-00023" summary="読み込み状態を表現できるようにする">
+      <created>1613835041518</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1613835041518</updated>
+    </task>
+    <task id="LOCAL-00024" summary="LinkPreviewApiのエラーを処理できるようにする">
+      <created>1613835098056</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1613835098056</updated>
+    </task>
+    <task id="LOCAL-00025" summary="metadata取得時に読み込み中情報もとれるようにする">
+      <created>1613835160910</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1613835160910</updated>
+    </task>
+    <task id="LOCAL-00026" summary="mapを実装する">
+      <created>1614100327293</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1614100327293</updated>
+    </task>
+    <task id="LOCAL-00027" summary="境界を設定する">
+      <created>1614100377302</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1614100377302</updated>
+    </task>
+    <task id="LOCAL-00028" summary="firebaseにログインしていないことを表すFirebaseNotLoggedExceptionを実装する">
+      <created>1614100610059</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1614100610059</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Resultでエラーを取り扱うようにする">
+      <created>1614169775506</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1614169775506</updated>
+    </task>
+    <task id="LOCAL-00030" summary="LoadStateで読み込み状態を取り扱うようにする">
+      <created>1614172844564</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1614172844564</updated>
+    </task>
+    <task id="LOCAL-00031" summary="ProgressBarで読み込み状態を表す">
+      <created>1614172935236</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1614172935236</updated>
+    </task>
+    <task id="LOCAL-00032" summary="test">
+      <created>1614951541278</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1614951541278</updated>
+    </task>
+    <task id="LOCAL-00033" summary="MetadataEntityからLinkPreviewMetadataEntityへ名前を変更する">
+      <created>1614953257322</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1614953257322</updated>
+    </task>
+    <task id="LOCAL-00034" summary="LoadStateへの変換関数を実装する">
+      <created>1615216685052</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1615216685052</updated>
+    </task>
+    <task id="LOCAL-00035" summary="LoadState周りのメソッドを追加する">
+      <created>1615216755810</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1615216755810</updated>
+    </task>
+    <task id="LOCAL-00036" summary="TwitterMetadataクラスを追加する">
+      <created>1615216950483</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1615216950483</updated>
+    </task>
+    <task id="LOCAL-00037" summary="TwitterBookmarkクラスを追加する">
+      <created>1615216993471</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1615216993471</updated>
+    </task>
+    <task id="LOCAL-00038" summary="TwitterBookmarkEntityを追加する">
+      <created>1615217136752</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1615217136752</updated>
+    </task>
+    <task id="LOCAL-00039" summary="git ignoreを更新する">
+      <created>1615217190911</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1615217190911</updated>
+    </task>
+    <task id="LOCAL-00040" summary="TwitterApiを実装する">
+      <created>1615217406667</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1615217406667</updated>
+    </task>
+    <task id="LOCAL-00041" summary="TwitterEntityを追加する">
+      <created>1615217443047</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1615217443047</updated>
+    </task>
+    <task id="LOCAL-00042" summary="TwitterApiKeyを追加する">
+      <created>1615217540982</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1615217540982</updated>
+    </task>
+    <task id="LOCAL-00043" summary="いままでのBookmarkを別のパスで保存する">
+      <created>1615217848480</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1615217848480</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Twitterのブックマークデータをfirestoreで保存する">
+      <created>1615218001775</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1615218001775</updated>
+    </task>
+    <task id="LOCAL-00045" summary="BookmarkRepositoryを追加する">
+      <created>1615218470834</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1615218470834</updated>
+    </task>
+    <task id="LOCAL-00046" summary="MetadataRepositoryを追加する">
+      <created>1615218563146</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1615218563146</updated>
+    </task>
+    <task id="LOCAL-00047" summary="TwitterEntityで画像を扱えるようにする">
+      <created>1615246415551</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1615246415551</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Twitterクラスを追加する">
+      <created>1615250738078</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1615250738078</updated>
+    </task>
+    <task id="LOCAL-00049" summary="TwitterMetadataにDefaultMetadataを含める">
+      <created>1615250810937</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1615250810937</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="metadata取得時に読み込み中情報もとれるようにする" />
+    <MESSAGE value="mapを実装する" />
+    <MESSAGE value="境界を設定する" />
+    <MESSAGE value="firebaseにログインしていないことを表すFirebaseNotLoggedExceptionを実装する" />
+    <MESSAGE value="Resultでエラーを取り扱うようにする" />
+    <MESSAGE value="LoadStateで読み込み状態を取り扱うようにする" />
+    <MESSAGE value="ProgressBarで読み込み状態を表す" />
+    <MESSAGE value="test" />
+    <MESSAGE value="MetadataEntityからLinkPreviewMetadataEntityへ名前を変更する" />
+    <MESSAGE value="LoadStateへの変換関数を実装する" />
+    <MESSAGE value="LoadState周りのメソッドを追加する" />
+    <MESSAGE value="TwitterMetadataクラスを追加する" />
+    <MESSAGE value="TwitterBookmarkクラスを追加する" />
+    <MESSAGE value="TwitterBookmarkEntityを追加する" />
+    <MESSAGE value="git ignoreを更新する" />
+    <MESSAGE value="TwitterApiを実装する" />
+    <MESSAGE value="TwitterEntityを追加する" />
+    <MESSAGE value="TwitterApiKeyを追加する" />
+    <MESSAGE value="いままでのBookmarkを別のパスで保存する" />
+    <MESSAGE value="Twitterのブックマークデータをfirestoreで保存する" />
+    <MESSAGE value="BookmarkRepositoryを追加する" />
+    <MESSAGE value="MetadataRepositoryを追加する" />
+    <MESSAGE value="TwitterEntityで画像を扱えるようにする" />
+    <MESSAGE value="Twitterクラスを追加する" />
+    <MESSAGE value="TwitterMetadataにDefaultMetadataを含める" />
+    <option name="LAST_COMMIT_MESSAGE" value="TwitterMetadataにDefaultMetadataを含める" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="564" y="111" key="#&lt;template&gt;_of_Android_JUnit" timestamp="1615194947459">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="564" y="111" key="#&lt;template&gt;_of_Android_JUnit/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615194947459" />
+    <state x="677" y="136" key="#BookmarkShelf:core:component_[processDebugGoogleServices]" timestamp="1611880849274">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="677" y="136" key="#BookmarkShelf:core:component_[processDebugGoogleServices]/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1611880849274" />
+    <state x="564" y="139" key="#ExampleUnitTest" timestamp="1615195707917">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="564" y="139" key="#ExampleUnitTest.addition_isCorrect" timestamp="1615195594270">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="564" y="139" key="#ExampleUnitTest.addition_isCorrect/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615195594270" />
+    <state x="564" y="139" key="#ExampleUnitTest.addition_isCorrect_(1)" timestamp="1615194819296">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="564" y="139" key="#ExampleUnitTest.addition_isCorrect_(1)/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615194819296" />
+    <state x="564" y="139" key="#ExampleUnitTest/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615195707917" />
+    <state x="477" y="266" key="#PSD" timestamp="1615064551719">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="477" y="266" key="#PSD/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615064551719" />
+    <state x="477" y="266" key="#PSD/-1080.-851.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1611669631306" />
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1615195214608">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615195214608" />
+    <state x="-779" y="-94" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1615214091765">
+      <screen x="-1080" y="-836" width="1080" height="1880" />
+    </state>
+    <state x="-779" y="-94" key="#com.intellij.fileTypes.FileTypeChooser/-1080.-836.1080.1880/0.0.1920.1040@-1080.-836.1080.1880" timestamp="1615214091765" />
+    <state x="752" y="236" key="#com.intellij.ide.util.MemberChooser" timestamp="1615202455779">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="752" y="236" key="#com.intellij.ide.util.MemberChooser/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615202455779" />
+    <state x="752" y="236" key="#com.intellij.ide.util.MemberChooser/-1080.-851.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1611592556216" />
+    <state x="591" y="444" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1613827969791">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="591" y="444" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1613827969791" />
+    <state x="713" y="401" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages" timestamp="1613827971660">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="713" y="401" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1613827971660" />
+    <state x="562" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1615208600165">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="562" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615208600165" />
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1613132631485">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1613132631484" />
+    <state x="641" y="311" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1613827989455">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="641" y="311" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1613827989455" />
+    <state x="641" y="311" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/-1080.-851.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1611603188408" />
+    <state x="643" y="219" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1614953806621">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="643" y="219" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1614953806621" />
+    <state x="92" y="92" width="1736" height="856" key="AVDManager" timestamp="1611602845367">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="92" y="92" width="1736" height="856" key="AVDManager/-1080.-851.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1611602845367" />
+    <state x="540" y="275" key="AndroidCreateResourceFileDialog" timestamp="1613047093459">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="540" y="275" key="AndroidCreateResourceFileDialog/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1613047093459" />
+    <state x="803" y="292" key="AndroidCreateXmlResourceDialog" timestamp="1613050315745">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="803" y="292" key="AndroidCreateXmlResourceDialog/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1613050315745" />
+    <state x="803" y="292" key="AndroidCreateXmlResourceDialog/-1080.-851.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1611604255701" />
+    <state x="848" y="97" key="CommitChangelistDialog2" timestamp="1615250806175">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="848" y="97" key="CommitChangelistDialog2/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615250806175" />
+    <state x="582" y="96" key="CommitChangelistDialog2/-1080.-851.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1611655345164" />
+    <state x="212" y="143" key="CommitChangelistDialog2/0.0.1080.1880@0.0.1080.1880" timestamp="1612066211201" />
+    <state x="208" y="95" key="DiffContextDialog" timestamp="1615250787147">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="208" y="95" key="DiffContextDialog/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615250787147" />
+    <state x="117" y="172" key="DiffContextDialog/0.0.1080.1880@0.0.1080.1880" timestamp="1612065794320" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1614508233326">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1614508233326" />
+    <state x="740" y="275" key="FileChooserDialogImpl/-1080.-851.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1611588237330" />
+    <state x="827" y="418" width="437" height="275" key="Github.ShareDialog" timestamp="1611604029380">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="827" y="418" width="437" height="275" key="Github.ShareDialog/-1080.-851.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1611604029380" />
+    <state x="708" y="224" key="Github.UntrackedFilesDialog" timestamp="1611604081232">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="708" y="224" key="Github.UntrackedFilesDialog/-1080.-851.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1611604081232" />
+    <state width="1876" height="344" key="GridCell.Tab.0.bottom" timestamp="1615245768281">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1036" height="716" key="GridCell.Tab.0.bottom/-1080.-836.1080.1880/0.0.1920.1040@-1080.-836.1080.1880" timestamp="1615214328337" />
+    <state width="1876" height="344" key="GridCell.Tab.0.bottom/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615245768281" />
+    <state width="1876" height="344" key="GridCell.Tab.0.center" timestamp="1615245768281">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1036" height="716" key="GridCell.Tab.0.center/-1080.-836.1080.1880/0.0.1920.1040@-1080.-836.1080.1880" timestamp="1615214328337" />
+    <state width="1876" height="344" key="GridCell.Tab.0.center/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615245768281" />
+    <state width="1876" height="344" key="GridCell.Tab.0.left" timestamp="1615245768281">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1036" height="716" key="GridCell.Tab.0.left/-1080.-836.1080.1880/0.0.1920.1040@-1080.-836.1080.1880" timestamp="1615214328337" />
+    <state width="1876" height="344" key="GridCell.Tab.0.left/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615245768281" />
+    <state width="1876" height="344" key="GridCell.Tab.0.right" timestamp="1615245768281">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1036" height="716" key="GridCell.Tab.0.right/-1080.-836.1080.1880/0.0.1920.1040@-1080.-836.1080.1880" timestamp="1615214328337" />
+    <state width="1876" height="344" key="GridCell.Tab.0.right/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615245768281" />
+    <state x="664" y="222" key="RollbackChangesDialog" timestamp="1615236618682">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="664" y="222" key="RollbackChangesDialog/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615236618682" />
+    <state x="468" y="165" key="SettingsEditor" timestamp="1615021675717">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="468" y="165" key="SettingsEditor/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615021675717" />
+    <state x="468" y="165" key="SettingsEditor/-1080.-851.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1611588877736" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1615218627944">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615218627944" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/-1080.-851.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1611678561994" />
+    <state x="264" y="457" key="Vcs.Push.Dialog.v2/0.0.1080.1880@0.0.1080.1880" timestamp="1612066221882" />
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1614952101970">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-647" y="-51" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1080.-836.1080.1880/0.0.1920.1040@-1080.-836.1080.1880" timestamp="1613724138566" />
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1614952101970" />
+    <state x="0" y="0" width="1892" height="1026" key="dock-window-1" timestamp="1614018560176">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="0" y="0" width="1892" height="1026" key="dock-window-1/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1614018560176" />
+    <state x="671" y="253" width="865" height="592" key="find.popup" timestamp="1615115861549">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="671" y="253" width="865" height="592" key="find.popup/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615115861549" />
+    <state x="671" y="253" width="577" height="534" key="find.popup/-1080.-851.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1611590649275" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1615052996297">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1615052996297" />
+    <state x="623" y="225" key="search.everywhere.popup" timestamp="1614953275619">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" key="search.everywhere.popup/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1614953275619" />
+    <state x="385" y="271" key="vcs.ApplyPatchDifferentiatedDialog" timestamp="1614952148824">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="385" y="271" key="vcs.ApplyPatchDifferentiatedDialog/-1080.-836.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1614952148824" />
+  </component>
+</project>
