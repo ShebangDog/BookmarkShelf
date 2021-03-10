@@ -8,21 +8,30 @@ import dog.shebang.shelf.R
 import dog.shebang.shelf.databinding.LayoutTwitterCardBinding
 
 class TwitterPreviewItem(
-    private val bookmark: Bookmark,
+    private val bookmark: Bookmark.TwitterBookmark,
     private val onClickListener: OnItemClickListener
 ) : BindableItem<LayoutTwitterCardBinding>() {
 
     override fun bind(viewBinding: LayoutTwitterCardBinding, position: Int) {
         viewBinding.apply {
-            cardView.setOnClickListener { onClickListener(it, bookmark.metadata.url) }
 
-            titleTextView.text = bookmark.metadata.title
-            descriptionTextView.text = bookmark.metadata.description
+            authorNameTextView.text = bookmark.metadata.authorName
+            tweetTextView.text = bookmark.metadata.text
+            titleTextView.text = bookmark.metadata.internal?.title
+            descriptionTextView.text = bookmark.metadata.internal?.description
+
+            val imageUrl = bookmark.metadata.internal?.let {
+                it.mediaImageUrl ?: it.previewImageUrl
+            }
 
             Glide.with(root)
-                .load(bookmark.metadata.image)
+                .load(imageUrl)
+                .into(previewImageView)
+
+            Glide.with(root)
+                .load(bookmark.metadata.authorProfileUrl)
                 .circleCrop()
-                .into(imageView)
+                .into(authorProfileImageView)
         }
     }
 

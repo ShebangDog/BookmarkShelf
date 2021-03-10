@@ -6,16 +6,16 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dog.shebang.data.RemoteCategoryDataSource
-import dog.shebang.data.RemoteFirestoreDataSource
-import dog.shebang.data.RemoteMetadataDataSource
+import dog.shebang.data.repository.BookmarkRepository
+import dog.shebang.data.repository.MetadataRepository
 import dog.shebang.model.Bookmark
 import dog.shebang.model.Category
 import kotlinx.coroutines.launch
 
 @Suppress("UNCHECKED_CAST")
 class PostViewModel @AssistedInject constructor(
-    private val remoteMetadataDataSource: RemoteMetadataDataSource,
-    private val remoteFirestoreDataSource: RemoteFirestoreDataSource,
+    private val metadataRepository: MetadataRepository,
+    private val bookmarkRepository: BookmarkRepository,
     private val remoteCategoryDataSource: RemoteCategoryDataSource,
     @Assisted private val savedStateHandle: SavedStateHandle,
     @Assisted private val url: String?
@@ -24,14 +24,14 @@ class PostViewModel @AssistedInject constructor(
     val metadataLiveData = liveData {
         url ?: return@liveData
 
-        emitSource(remoteMetadataDataSource.fetchMetadata(url).asLiveData())
+        emitSource(metadataRepository.fetchMetadata(url).asLiveData())
     }
 
     private val mutableCategoryLiveData = MutableLiveData<Category>()
     val categoryLiveData: LiveData<Category> = mutableCategoryLiveData
 
     fun storeBookmark(bookmark: Bookmark) = viewModelScope.launch {
-        remoteFirestoreDataSource.storeBookmark(bookmark)
+        bookmarkRepository.storeBookmark(bookmark)
     }
 
     fun saveCategory(category: Category) = viewModelScope.launch {

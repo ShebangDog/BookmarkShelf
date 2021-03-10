@@ -4,15 +4,18 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dog.shebang.data.firestore.BookmarkFirestore
-import dog.shebang.data.firestore.BookmarkFirestoreImpl
+import dog.shebang.data.api.TwitterApiKey
+import dog.shebang.data.api.TwitterApiKeyImpl
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class BookmarkFirestoreModule {
+abstract class TwitterApiKeyModule {
 
     @Singleton
     @Binds
-    abstract fun bindBookmarkFirestore(bookmarkFirestore: BookmarkFirestoreImpl): BookmarkFirestore
+    abstract fun bindTwitterApiKey(
+        twitterApiKeyImpl: TwitterApiKeyImpl
+    ): TwitterApiKey
+
 }

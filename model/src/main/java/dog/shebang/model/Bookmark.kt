@@ -1,6 +1,15 @@
 package dog.shebang.model
 
-data class Bookmark(
-    val metadata: Metadata,
-    val category: Category
-)
+sealed class Bookmark {
+
+    class DefaultBookmark(
+        val metadata: Metadata.DefaultMetadata,
+        val category: Category
+    ) : Bookmark()
+
+    class TwitterBookmark(
+        val metadata: Metadata.TwitterMetadata,
+        val category: Category
+    ) : Bookmark()
+
+}

@@ -8,7 +8,7 @@ import dog.shebang.model.Bookmark
 import dog.shebang.shelf.R
 
 class DefaultPreviewItem(
-    private val bookmark: Bookmark,
+    private val bookmark: Bookmark.DefaultBookmark,
     private val onClickListener: OnItemClickListener
 ) : BindableItem<LayoutBookmarkCardBinding>() {
 
@@ -19,7 +19,9 @@ class DefaultPreviewItem(
             titleTextView.text = bookmark.metadata.title
             descriptionTextView.text = bookmark.metadata.description
 
-            Glide.with(root).load(bookmark.metadata.image).into(imageView)
+            Glide.with(root)
+                .load(bookmark.metadata.previewImageUrl)
+                .into(previewImageView)
         }
     }
 

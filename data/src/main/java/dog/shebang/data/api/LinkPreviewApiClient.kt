@@ -6,7 +6,7 @@ import dog.shebang.model.Result
 import javax.inject.Inject
 
 interface LinkPreviewApiClient {
-    suspend fun fetchMetadata(url: String): Result<Metadata>
+    suspend fun fetchMetadata(url: String): Result<Metadata.DefaultMetadata>
 }
 
 class LinkPreviewApiClientImpl @Inject constructor(
@@ -14,7 +14,7 @@ class LinkPreviewApiClientImpl @Inject constructor(
     private val linkPreviewApiKey: LinkPreviewApiKey
 ) : LinkPreviewApiClient {
 
-    override suspend fun fetchMetadata(url: String): Result<Metadata> {
+    override suspend fun fetchMetadata(url: String): Result<Metadata.DefaultMetadata> {
         val response = linkPreviewApi.fetchMetadata(linkPreviewApiKey.apiKey, url)
 
         return try {
