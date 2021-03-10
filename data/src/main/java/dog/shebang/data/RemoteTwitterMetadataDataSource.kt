@@ -33,6 +33,7 @@ class RemoteTwitterMetadataDataSourceImpl @Inject constructor(
                     authorName = userData.data.name,
                     authorProfileUrl = userData.data.profileImageUrl,
                     text = tweet.data.text,
+                    url = url,
                     internal = Metadata.TwitterMetadata.Metadata(
                         previewImageUrl = tweet.data.previews.firstOrNull()?.images?.firstOrNull()?.url,
                         mediaImageUrl = tweet.data.medias.firstOrNull()?.url,

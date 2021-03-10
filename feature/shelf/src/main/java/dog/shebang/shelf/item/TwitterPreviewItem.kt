@@ -14,6 +14,7 @@ class TwitterPreviewItem(
 
     override fun bind(viewBinding: LayoutTwitterCardBinding, position: Int) {
         viewBinding.apply {
+            cardView.setOnClickListener { onClickListener(it, bookmark.metadata.url) }
 
             authorNameTextView.text = bookmark.metadata.authorName
             tweetTextView.text = bookmark.metadata.text
