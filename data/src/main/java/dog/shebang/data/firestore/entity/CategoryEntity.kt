@@ -8,10 +8,12 @@ data class CategoryEntity(
     val color: Color? = null
 ) {
 
-    fun modelOrNull(): Category? {
-        val elemList = listOf(value, color)
-        if (elemList.contains(null)) return null
-
-        return Category(value!!, color!!)
+    fun modelOrNull(): Category? = try {
+        Category(
+            value!!,
+            color!!
+        )
+    } catch (throwable: Throwable) {
+        null
     }
 }

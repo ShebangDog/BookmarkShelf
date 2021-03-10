@@ -1,7 +1,5 @@
 package dog.shebang.data.firestore
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -38,13 +36,10 @@ class DefaultBookmarkFirestoreImpl @Inject constructor() : DefaultBookmarkFirest
                     exception?.run { throw this }
 
                     val entityList = snapshot?.toObjects(DefaultBookmarkEntity::class.java)
-
-                    Log.d(TAG, "fetchBookmarkList Default: $entityList")
                     val bookmarkList = entityList
                         ?.mapNotNull { it.modelOrNull() }
                         ?: emptyList()
 
-                    Log.d(TAG, "fetchBookmarkList Default2: $bookmarkList")
                     offer(Result.Success(bookmarkList))
 
                 }
