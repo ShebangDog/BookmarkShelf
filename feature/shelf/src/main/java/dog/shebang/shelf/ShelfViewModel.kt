@@ -5,26 +5,43 @@ import androidx.savedstate.SavedStateRegistryOwner
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import dog.shebang.data.RemoteFirestoreDataSource
+import dog.shebang.data.repository.BookmarkRepository
+import dog.shebang.model.Bookmark
 import dog.shebang.model.Category
+import dog.shebang.model.LoadState
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 @Suppress("UNCHECKED_CAST")
 class ShelfViewModel @AssistedInject constructor(
-    remoteFirestoreDataSource: RemoteFirestoreDataSource,
+    private val bookmarkRepository: BookmarkRepository,
     @Assisted private val savedStateHandle: SavedStateHandle,
     @Assisted val category: Category
 ) : ViewModel() {
 
     private val isDefaultCategory = category.value == Category.defaultCategoryName
 
-    val bookmarkListLiveData = remoteFirestoreDataSource.fetchBookmarkList()
-        .map { loadState ->
-            loadState.map { bookmarkList ->
-                if (isDefaultCategory) bookmarkList
-                else bookmarkList.filter { it.category.value == category.value }
-            }
+    val bookmarkListLiveData = bookmarkListFlow()
+        .filterByCategory {
+            if (isDefaultCategory) true
+            else it.value == category.value
         }.asLiveData()
+
+    private fun bookmarkListFlow() = bookmarkRepository.fetchBookmarkList()
+    private fun Flow<LoadState<List<Bookmark>>>.filterByCategory(
+        predicate: (Category) -> Boolean
+    ) = this.map { loadState ->
+        loadState.map { bookmarkList ->
+            bookmarkList.filter { bookmark ->
+                val category = when (bookmark) {
+                    is Bookmark.DefaultBookmark -> bookmark.category
+                    is Bookmark.TwitterBookmark -> bookmark.category
+                }
+
+                predicate(category)
+            }
+        }
+    }
 
     @AssistedFactory
     interface ShelfViewModelFactory {

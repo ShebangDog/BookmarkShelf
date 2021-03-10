@@ -77,7 +77,7 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
                                 Glide.with(this@PostActivity)
                                     .load(metadata.authorProfileUrl)
                                     .circleCrop()
-                                    .into(profileImageView)
+                                    .into(authorProfileImageView)
                             }
                         }
                     }

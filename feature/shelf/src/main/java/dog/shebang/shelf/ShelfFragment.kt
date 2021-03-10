@@ -15,12 +15,12 @@ import com.xwray.groupie.viewbinding.GroupieViewHolder
 import dagger.hilt.android.AndroidEntryPoint
 import dog.shebang.core.databinding.LayoutBookmarkCardBinding
 import dog.shebang.core.ext.setSpan
+import dog.shebang.model.Bookmark
 import dog.shebang.model.Category
 import dog.shebang.model.Color
 import dog.shebang.model.LoadState
 import dog.shebang.shelf.databinding.FragmentShelfBinding
 import dog.shebang.shelf.item.DefaultPreviewItem
-import dog.shebang.shelf.item.ItemType
 import dog.shebang.shelf.item.TwitterPreviewItem
 import javax.inject.Inject
 
@@ -57,30 +57,26 @@ class ShelfFragment : Fragment(R.layout.fragment_shelf) {
         viewModel.bookmarkListLiveData.observe(viewLifecycleOwner) { loadState ->
 
             val bindableItemProvider: BindableItemProvider = { bookmark, listener ->
-                when (Url.parseDataType(bookmark.metadata.url)) {
-                    is ItemType.Twitter -> TwitterPreviewItem(bookmark, listener)
-                    is ItemType.Facebook -> DefaultPreviewItem(bookmark, listener)
-                    is ItemType.None -> DefaultPreviewItem(bookmark, listener)
+                when (bookmark) {
+                    is Bookmark.DefaultBookmark -> DefaultPreviewItem(bookmark, listener)
+                    is Bookmark.TwitterBookmark -> TwitterPreviewItem(bookmark, listener)
                 }
             }
 
             when (loadState) {
                 is LoadState.Error -> {
                 }
-                is LoadState.Loading -> {
-                    binding.progressBar.isVisible = true
-                }
+                is LoadState.Loading -> binding.progressBar.isVisible = true
                 is LoadState.Loaded -> {
                     binding.progressBar.isVisible = false
-                }
-            }
 
-            loadState.ifIsLoaded { bookmarkList ->
-                val bookmarkItemList = bookmarkList.map {
-                    bindableItemProvider(it) { _, url -> browse(url) }
-                }
+                    val bookmarkList = loadState.value
+                    val bookmarkItemList = bookmarkList.map {
+                        bindableItemProvider(it) { _, url -> browse(url) }
+                    }
 
-                adapter.update(bookmarkItemList)
+                    adapter.update(bookmarkItemList)
+                }
             }
         }
     }
@@ -92,15 +88,3 @@ class ShelfFragment : Fragment(R.layout.fragment_shelf) {
     }
 }
 
-object Url {
-
-    fun parseDataType(url: String): ItemType {
-        val host = Uri.parse(url).host ?: return ItemType.None
-
-        ItemType.itemList.forEach {
-            if (host.contains(it.type)) return it
-        }
-
-        return ItemType.None
-    }
-}
