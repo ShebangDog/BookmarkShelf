@@ -70,8 +70,7 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
                                     .load(imageUrl)
                                     .into(previewImageView)
 
-                                previewImageView.isVisible =
-                                    metadata.internal?.previewImageUrl != null
+                                previewImageView.isVisible = imageUrl != null
 
                                 Glide.with(this@PostActivity)
                                     .load(metadata.authorProfileUrl)
