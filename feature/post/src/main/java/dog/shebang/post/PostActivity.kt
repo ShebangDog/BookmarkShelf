@@ -10,7 +10,6 @@ import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.wada811.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import dog.shebang.core.component.CategoryBottomSheet
 import dog.shebang.core.ext.Navigator
 import dog.shebang.model.*
 import dog.shebang.post.databinding.ActivityPostBinding

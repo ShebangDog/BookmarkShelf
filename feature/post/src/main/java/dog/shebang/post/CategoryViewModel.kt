@@ -1,4 +1,4 @@
-package dog.shebang.core.component
+package dog.shebang.post
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData

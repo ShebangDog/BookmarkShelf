@@ -1,4 +1,4 @@
-package dog.shebang.core.component
+package dog.shebang.post
 
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -26,7 +26,7 @@ class CategoryBottomSheet(
 ) : BottomSheetDialogFragment() {
 
     companion object {
-        const val TAG = "dog.shebang.core.component.CategoryBottomSheet"
+        const val TAG = "dog.shebang.post.component.CategoryBottomSheet"
     }
 
     private lateinit var binding: LayoutCategoryBottomSheetBinding
