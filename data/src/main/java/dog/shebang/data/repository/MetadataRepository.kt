@@ -1,7 +1,7 @@
 package dog.shebang.data.repository
 
-import dog.shebang.data.RemoteMetadataDataSource
-import dog.shebang.data.RemoteTwitterMetadataDataSource
+import dog.shebang.data.datasource.remote.RemoteMetadataDataSource
+import dog.shebang.data.datasource.remote.RemoteTwitterMetadataDataSource
 import dog.shebang.model.LoadState
 import dog.shebang.model.Metadata
 import kotlinx.coroutines.flow.Flow

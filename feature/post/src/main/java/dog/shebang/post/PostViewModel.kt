@@ -5,7 +5,7 @@ import androidx.savedstate.SavedStateRegistryOwner
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import dog.shebang.data.RemoteCategoryDataSource
+import dog.shebang.data.datasource.remote.RemoteCategoryDataSource
 import dog.shebang.data.repository.BookmarkRepository
 import dog.shebang.data.repository.MetadataRepository
 import dog.shebang.model.Bookmark

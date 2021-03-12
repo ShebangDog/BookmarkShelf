@@ -4,8 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dog.shebang.data.RemoteMetadataDataSource
-import dog.shebang.data.RemoteMetadataDataSourceImpl
+import dog.shebang.data.datasource.remote.RemoteMetadataDataSource
+import dog.shebang.data.datasource.remote.RemoteMetadataDataSourceImpl
 import javax.inject.Singleton
 
 @Module

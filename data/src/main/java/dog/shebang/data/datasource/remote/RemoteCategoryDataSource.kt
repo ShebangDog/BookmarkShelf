@@ -1,4 +1,4 @@
-package dog.shebang.data
+package dog.shebang.data.datasource.remote
 
 import dog.shebang.data.firestore.CategoryFirestore
 import dog.shebang.model.Category

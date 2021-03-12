@@ -1,4 +1,4 @@
-package dog.shebang.data
+package dog.shebang.data.datasource.remote
 
 import dog.shebang.data.firestore.DefaultBookmarkFirestore
 import dog.shebang.model.Bookmark
