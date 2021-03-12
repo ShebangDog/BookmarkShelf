@@ -10,16 +10,12 @@ import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.wada811.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import dog.shebang.core.ext.Navigator
 import dog.shebang.model.*
 import dog.shebang.post.databinding.ActivityPostBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class PostActivity : AppCompatActivity(R.layout.activity_post) {
-
-    @Inject
-    lateinit var navigator: Navigator
 
     @Inject
     lateinit var factory: PostViewModel.PostViewModelFactory
@@ -97,7 +93,7 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
 
                     viewModel.storeBookmark(bookmark)
 
-                    navigator.navigateToMain(this@PostActivity, this@PostActivity::startActivity)
+                    finish()
                 }
             }
 
