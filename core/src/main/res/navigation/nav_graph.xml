@@ -11,8 +11,9 @@
 
         <argument
             android:name="categoryName"
-            android:defaultValue=""
-            app:argType="string" />
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
 
         <argument
             android:name="categoryColor"
