@@ -1,6 +1,7 @@
 package dog.shebang.shelf.item
 
 import android.view.View
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.xwray.groupie.viewbinding.BindableItem
 import dog.shebang.model.Bookmark
@@ -24,6 +25,8 @@ class TwitterPreviewItem(
             val imageUrl = bookmark.metadata.internal?.let {
                 it.mediaImageUrl ?: it.previewImageUrl
             }
+
+            previewImageView.isVisible = imageUrl != null
 
             Glide.with(root)
                 .load(imageUrl)

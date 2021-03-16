@@ -1,6 +1,7 @@
 package dog.shebang.shelf.item
 
 import android.view.View
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.xwray.groupie.viewbinding.BindableItem
 import dog.shebang.core.databinding.LayoutBookmarkCardBinding
@@ -18,6 +19,8 @@ class DefaultPreviewItem(
 
             titleTextView.text = bookmark.metadata.title
             descriptionTextView.text = bookmark.metadata.description
+
+            previewImageView.isVisible = bookmark.metadata.previewImageUrl != null
 
             Glide.with(root)
                 .load(bookmark.metadata.previewImageUrl)
