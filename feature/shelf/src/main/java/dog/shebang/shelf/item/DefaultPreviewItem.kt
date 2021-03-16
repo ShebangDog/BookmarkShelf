@@ -4,9 +4,9 @@ import android.view.View
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.xwray.groupie.viewbinding.BindableItem
-import dog.shebang.core.databinding.LayoutBookmarkCardBinding
 import dog.shebang.model.Bookmark
 import dog.shebang.shelf.R
+import dog.shebang.shelf.databinding.LayoutBookmarkCardBinding
 
 class DefaultPreviewItem(
     private val bookmark: Bookmark.DefaultBookmark,
