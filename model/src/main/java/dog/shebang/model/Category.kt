@@ -10,8 +10,12 @@ data class Category(val value: String, val color: Color) {
     companion object {
         const val maxLength = 10
 
-        const val defaultCategoryName = "DefaultCategory"
+        const val defaultCategoryName = "All"
+
+        val defaultCategory = Category(defaultCategoryName, Color.defaultColor)
     }
+
+    fun isDefault(): Boolean = this.value == defaultCategoryName
 }
 
 class Color private constructor(internalColor: android.graphics.Color) {

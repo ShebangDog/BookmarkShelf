@@ -19,11 +19,9 @@ class ShelfViewModel @AssistedInject constructor(
     @Assisted val category: Category
 ) : ViewModel() {
 
-    private val isDefaultCategory = category.value == Category.defaultCategoryName
-
     val bookmarkListLiveData = bookmarkListFlow()
         .filterByCategory {
-            if (isDefaultCategory) true
+            if (category.isDefault()) true
             else it.value == category.value
         }.asLiveData()
 

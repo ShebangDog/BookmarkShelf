@@ -36,10 +36,9 @@ class ShelfFragment : Fragment(R.layout.fragment_shelf) {
         ShelfViewModel.provideFactory(
             this,
             factory,
-            Category(
-                arguments.categoryName.let { if (it.isBlank()) Category.defaultCategoryName else it },
-                arguments.categoryColor.let(Color::valueOf)
-            )
+            arguments.categoryName?.let {
+                Category(it, Color.defaultColor)
+            } ?: Category.defaultCategory
         )
     }
 

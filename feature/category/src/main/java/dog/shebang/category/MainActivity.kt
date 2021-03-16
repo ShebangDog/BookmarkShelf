@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.forEach
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -59,18 +60,42 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
 
             viewModel.categoryListLiveData.observe(this@MainActivity) { categoryList ->
-                categorySelectorNavigationView.menu.clear()
+                val selectedCategory = viewModel.selectedCategoryLiveData.value ?: return@observe
+                val newCategoryList = categoryList + Category.defaultCategory
 
-                categoryList.forEachIndexed { index, category ->
-                    categorySelectorNavigationView.addCategory(index, category)
-                }
+                categorySelectorNavigationView.updateMenu(newCategoryList, selectedCategory)
             }
+
         }
     }
 
-    private fun NavigationView.addCategory(order: Int, category: Category, groupId: Int = 0) {
+    private fun NavigationView.addCategory(
+        order: Int,
+        category: Category,
+        groupId: Int = R.id.group
+    ) {
 
         menu.add(groupId, category.value.hashCode(), order, category.value)
+    }
+
+    private fun NavigationView.updateMenu(itemList: List<Category>, selectedCategory: Category) {
+
+        menu.clear()
+        itemList.forEachIndexed { index, category ->
+            addCategory(
+                itemList.size - index,
+                category
+            )
+        }
+
+        menu.forEach { menuItem ->
+            if (selectedCategory.value == menuItem.title) {
+                menuItem.isChecked = true
+                menuItem.isCheckable = true
+
+                return@forEach
+            }
+        }
     }
 
     override fun onStart() {
@@ -123,10 +148,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
             val categoryList = viewModel.categoryListLiveData.value ?: return true
             val name = item.title.toString()
-            val category = categoryList.first { it.value == name }
+            val category = categoryList.firstOrNull { it.value == name } ?: Category.defaultCategory
             val action = ShelfFragmentDirections.shelfToShelf(
                 category.value, category.color.value
             )
+
+            viewModel.onCategorySelected(category)
 
             navController.navigate(action)
             drawerLayout.closeDrawer(navigationView)
