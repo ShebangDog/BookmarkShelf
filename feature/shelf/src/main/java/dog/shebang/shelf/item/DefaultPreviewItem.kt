@@ -15,15 +15,25 @@ class DefaultPreviewItem(
 
     override fun bind(viewBinding: LayoutBookmarkCardBinding, position: Int) {
         viewBinding.apply {
-            cardView.setOnClickListener { onClickListener(it, bookmark.metadata.url) }
+            val (
+                title,
+                description,
+                previewImageUrl,
+                url
+            ) = bookmark.metadata
 
-            titleTextView.text = bookmark.metadata.title
-            descriptionTextView.text = bookmark.metadata.description
+            cardView.setOnClickListener { onClickListener(it, url) }
 
-            previewImageView.isVisible = bookmark.metadata.previewImageUrl != null
+            titleTextView.isVisible = title != null
+            descriptionTextView.isVisible = description != null
+
+            titleTextView.text = title
+            descriptionTextView.text = description
+
+            previewImageView.isVisible = previewImageUrl != null
 
             Glide.with(root)
-                .load(bookmark.metadata.previewImageUrl)
+                .load(previewImageUrl)
                 .into(previewImageView)
         }
     }

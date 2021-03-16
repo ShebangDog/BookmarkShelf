@@ -15,14 +15,26 @@ class TwitterPreviewItem(
 
     override fun bind(viewBinding: LayoutTwitterCardBinding, position: Int) {
         viewBinding.apply {
-            cardView.setOnClickListener { onClickListener(it, bookmark.metadata.url) }
+            val (
+                authorName,
+                authorProfileUrl,
+                text,
+                url,
+                internal
+            ) = bookmark.metadata
 
-            authorNameTextView.text = bookmark.metadata.authorName
-            tweetTextView.text = bookmark.metadata.text
-            titleTextView.text = bookmark.metadata.internal?.title
-            descriptionTextView.text = bookmark.metadata.internal?.description
+            cardView.setOnClickListener { onClickListener(it, url) }
 
-            val imageUrl = bookmark.metadata.internal?.let {
+            authorNameTextView.text = authorName
+            tweetTextView.text = text
+
+            titleTextView.isVisible = internal?.title != null
+            descriptionTextView.isVisible = internal?.description != null
+
+            titleTextView.text = internal?.title
+            descriptionTextView.text = internal?.description
+
+            val imageUrl = internal?.let {
                 it.mediaImageUrl ?: it.previewImageUrl
             }
 
@@ -33,7 +45,7 @@ class TwitterPreviewItem(
                 .into(previewImageView)
 
             Glide.with(root)
-                .load(bookmark.metadata.authorProfileUrl)
+                .load(authorProfileUrl)
                 .circleCrop()
                 .into(authorProfileImageView)
         }
