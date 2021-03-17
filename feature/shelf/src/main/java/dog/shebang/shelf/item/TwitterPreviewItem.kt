@@ -23,7 +23,7 @@ class TwitterPreviewItem(
                 internal
             ) = bookmark.metadata
 
-            cardView.setOnClickListener { onClickListener(it, url) }
+            cardView.setOnClickListener { onClickListener(it, internal?.url ?: url) }
 
             authorNameTextView.text = authorName
             tweetTextView.text = text

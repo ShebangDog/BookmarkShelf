@@ -1,6 +1,5 @@
 package dog.shebang.shelf
 
-import BindableItemProvider
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -20,6 +19,7 @@ import dog.shebang.model.Color
 import dog.shebang.model.LoadState
 import dog.shebang.shelf.databinding.FragmentShelfBinding
 import dog.shebang.shelf.databinding.LayoutBookmarkCardBinding
+import dog.shebang.shelf.item.BindableItemProvider
 import dog.shebang.shelf.item.DefaultPreviewItem
 import dog.shebang.shelf.item.TwitterPreviewItem
 import javax.inject.Inject
