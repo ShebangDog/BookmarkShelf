@@ -13,13 +13,13 @@ import com.wada811.viewbinding.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.viewbinding.GroupieViewHolder
 import dagger.hilt.android.AndroidEntryPoint
-import dog.shebang.core.databinding.LayoutBookmarkCardBinding
 import dog.shebang.core.ext.setSpan
 import dog.shebang.model.Bookmark
 import dog.shebang.model.Category
 import dog.shebang.model.Color
 import dog.shebang.model.LoadState
 import dog.shebang.shelf.databinding.FragmentShelfBinding
+import dog.shebang.shelf.databinding.LayoutBookmarkCardBinding
 import dog.shebang.shelf.item.DefaultPreviewItem
 import dog.shebang.shelf.item.TwitterPreviewItem
 import javax.inject.Inject
