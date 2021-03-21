@@ -110,7 +110,7 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
             }
 
             viewModel.categoryLiveData.observe(this@PostActivity) {
-                categoryChip.text = it.value
+                categoryChip.text = it.name
                 categoryChip.chipBackgroundColor = ColorStateList.valueOf(it.color.value)
             }
 

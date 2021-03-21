@@ -2,9 +2,9 @@ package dog.shebang.model
 
 import kotlin.random.Random
 
-data class Category(val value: String, val color: Color) {
+data class Category(val name: String, val color: Color) {
     init {
-        require(value.length <= maxLength || value == defaultCategoryName)
+        require(name.length <= maxLength || name == defaultCategoryName)
     }
 
     companion object {
@@ -15,7 +15,7 @@ data class Category(val value: String, val color: Color) {
         val defaultCategory = Category(defaultCategoryName, Color.defaultColor)
     }
 
-    fun isDefault(): Boolean = this.value == defaultCategoryName
+    fun isDefault(): Boolean = this.name == defaultCategoryName
 }
 
 class Color private constructor(internalColor: android.graphics.Color) {

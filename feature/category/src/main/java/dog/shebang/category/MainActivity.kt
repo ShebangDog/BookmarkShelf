@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         groupId: Int = R.id.group
     ) {
 
-        menu.add(groupId, category.value.hashCode(), order, category.value)
+        menu.add(groupId, category.name.hashCode(), order, category.name)
     }
 
     private fun NavigationView.updateMenu(itemList: List<Category>, selectedCategory: Category) {
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
 
         menu.forEach { menuItem ->
-            if (selectedCategory.value == menuItem.title) {
+            if (selectedCategory.name == menuItem.title) {
                 menuItem.isChecked = true
                 menuItem.isCheckable = true
 
@@ -148,9 +148,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
             val categoryList = viewModel.categoryListLiveData.value ?: return true
             val name = item.title.toString()
-            val category = categoryList.firstOrNull { it.value == name } ?: Category.defaultCategory
+            val category = categoryList.firstOrNull { it.name == name } ?: Category.defaultCategory
             val action = ShelfFragmentDirections.shelfToShelf(
-                category.value, category.color.value
+                category.name, category.color.value
             )
 
             viewModel.onCategorySelected(category)

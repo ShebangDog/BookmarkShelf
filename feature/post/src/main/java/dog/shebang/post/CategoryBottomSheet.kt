@@ -141,7 +141,7 @@ class CategoryBottomSheet(
             setChipDrawable(chipDrawable)
             setOnClickListener { onChipClick(chip, category) }
 
-            text = category.value
+            text = category.name
             isChecked = if (chipGroup.isSingleSelection) isChecked else isChipChecked
 
             chipBackgroundColor = ColorStateList.valueOf(category.color.value)

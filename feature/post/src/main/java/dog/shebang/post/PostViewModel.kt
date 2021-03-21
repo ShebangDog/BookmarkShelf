@@ -10,6 +10,7 @@ import dog.shebang.data.repository.BookmarkRepository
 import dog.shebang.data.repository.MetadataRepository
 import dog.shebang.model.Bookmark
 import dog.shebang.model.Category
+import dog.shebang.model.LoadState
 import kotlinx.coroutines.launch
 
 @Suppress("UNCHECKED_CAST")
