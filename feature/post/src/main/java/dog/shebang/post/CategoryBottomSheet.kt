@@ -74,7 +74,7 @@ class CategoryBottomSheet(
 
                     val context = binding.root.context
                     addCategoryButton.background.setTint(
-                        if (contains || isOver) android.graphics.Color.GRAY else context.getColor(R.color.purple_700)
+                        if (contains || isOver) android.graphics.Color.GRAY else context.getColor(R.color.brown_500)
                     )
 
                     addCategoryButton.visibility =
