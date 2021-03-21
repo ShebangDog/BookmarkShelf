@@ -22,7 +22,10 @@ class PostViewModel @AssistedInject constructor(
 ) : ViewModel() {
 
     val metadataLiveData = liveData {
-        url ?: return@liveData
+        if (url == null) {
+            emit(LoadState.Error(NullPointerException("url is null")))
+            return@liveData
+        }
 
         emitSource(metadataRepository.fetchMetadata(url).asLiveData())
     }
