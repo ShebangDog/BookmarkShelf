@@ -43,16 +43,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val navController = navHostFragment.navController
 
         binding.apply {
-            val listener = OnNavigationCategorySelectedListener(
-                categoryDrawerLayout,
-                categorySelectorNavigationView,
-                navController,
-                viewModel
-            )
-
             categorySelectorNavigationView.apply {
                 setupWithNavController(navController)
-                setNavigationItemSelectedListener(listener)
+                setNavigationItemSelectedListener(
+                    OnNavigationCategorySelectedListener(
+                        viewModel = viewModel,
+                        drawerLayout = categoryDrawerLayout,
+                        navigationView = categorySelectorNavigationView,
+                        navigateToShelf = { navigateToShelfByCategory(navController, it) }
+                    )
+                )
             }
 
             topAppBar.setOnClickListener {
@@ -136,29 +136,37 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     class OnNavigationCategorySelectedListener(
+        private val viewModel: MainViewModel,
         private val drawerLayout: DrawerLayout,
         private val navigationView: NavigationView,
-        private val navController: NavController,
-        private val viewModel: MainViewModel
+        private val navigateToShelf: (Category) -> Unit
     ) : NavigationView.OnNavigationItemSelectedListener {
 
         override fun onNavigationItemSelected(item: MenuItem): Boolean {
             item.isCheckable = true
             item.isChecked = true
 
-            val categoryList = viewModel.categoryListLiveData.value ?: return true
+            val categoryList = viewModel.categoryListLiveData.value
             val name = item.title.toString()
-            val category = categoryList.firstOrNull { it.name == name } ?: Category.defaultCategory
-            val action = ShelfFragmentDirections.shelfToShelf(
-                category.name, category.color.value
-            )
+
+            val category = categoryList?.firstOrNull { it.name == name } ?: Category.defaultCategory
 
             viewModel.onCategorySelected(category)
 
-            navController.navigate(action)
+            navigateToShelf(category)
             drawerLayout.closeDrawer(navigationView)
 
             return true
         }
+    }
+
+    private fun navigateToShelfByCategory(navController: NavController, category: Category) {
+
+        val action = ShelfFragmentDirections.shelfToShelf(
+            categoryName = category.name,
+            categoryColor = category.color.value
+        )
+
+        navController.navigate(action)
     }
 }
