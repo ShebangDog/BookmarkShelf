@@ -3,12 +3,13 @@ package dog.shebang.category
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dog.shebang.data.datasource.remote.RemoteCategoryDataSource
 import dog.shebang.model.Category
 import dog.shebang.model.LoadState
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,16 +17,15 @@ class MainViewModel @Inject constructor(
     remoteCategoryDataSource: RemoteCategoryDataSource
 ) : ViewModel() {
 
-    private val isMutableSelectedCategoryLiveData = MutableLiveData(Category.defaultCategory)
-    val selectedCategoryLiveData: LiveData<Category> = isMutableSelectedCategoryLiveData
+    private val mutableSelectedCategoryLiveData = MutableLiveData(Category.defaultCategory)
+    val selectedCategoryLiveData: LiveData<Category> = mutableSelectedCategoryLiveData
 
-    val categoryListLiveData = liveData {
-        remoteCategoryDataSource.fetchCategoryList().collect { loadState ->
-            if (loadState is LoadState.Loaded) emit(loadState.value)
-        }
-    }
+    val categoryListLiveData = remoteCategoryDataSource.fetchCategoryList()
+        .filterIsInstance<LoadState.Loaded<List<Category>>>()
+        .map { it.value }
+        .asLiveData()
 
     fun onCategorySelected(category: Category) {
-        isMutableSelectedCategoryLiveData.value = category
+        mutableSelectedCategoryLiveData.value = category
     }
 }
