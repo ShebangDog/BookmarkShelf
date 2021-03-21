@@ -22,7 +22,7 @@ class ShelfViewModel @AssistedInject constructor(
     val bookmarkListLiveData = bookmarkListFlow()
         .filterByCategory {
             if (category.isDefault()) true
-            else it.name == category.name
+            else it == category
         }.asLiveData()
 
     private fun bookmarkListFlow() = bookmarkRepository.fetchBookmarkList()

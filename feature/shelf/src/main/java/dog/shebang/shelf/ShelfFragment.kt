@@ -33,12 +33,15 @@ class ShelfFragment : Fragment(R.layout.fragment_shelf) {
     @Inject
     lateinit var factory: ShelfViewModel.ShelfViewModelFactory
     private val viewModel: ShelfViewModel by viewModels {
+        val category = arguments.categoryName?.let {
+            val color = Color.valueOf(arguments.categoryColor)
+            Category(it, color)
+        }
+
         ShelfViewModel.provideFactory(
             this,
             factory,
-            arguments.categoryName?.let {
-                Category(it, Color.defaultColor)
-            } ?: Category.defaultCategory
+            category ?: Category.defaultCategory
         )
     }
 
