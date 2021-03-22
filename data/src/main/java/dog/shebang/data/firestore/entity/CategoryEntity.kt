@@ -4,13 +4,13 @@ import dog.shebang.model.Category
 import dog.shebang.model.Color
 
 data class CategoryEntity(
-    val value: String? = null,
+    val name: String? = null,
     val color: Color? = null
 ) {
 
     fun modelOrNull(): Category? = try {
         Category(
-            value!!,
+            name!!,
             color!!
         )
     } catch (throwable: Throwable) {
