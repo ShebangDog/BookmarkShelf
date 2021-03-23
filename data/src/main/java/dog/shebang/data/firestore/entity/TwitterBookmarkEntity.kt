@@ -22,7 +22,7 @@ data class TwitterBookmarkEntity(
         val authorProfileUrl: String? = null,
         val text: String? = null,
         val url: String? = null,
-        val internal: MetadataEntity? = null
+        val internal: InternalMetadata? = null
     ) {
 
         fun modelOrNull(): Metadata.TwitterMetadata? = try {
@@ -31,7 +31,7 @@ data class TwitterBookmarkEntity(
                 authorProfileUrl = authorProfileUrl!!,
                 text = text!!,
                 url = url!!,
-                internal = Metadata.TwitterMetadata.Metadata(
+                internal = Metadata.TwitterMetadata.InternalMetadata(
                     title = internal?.title,
                     description = internal?.description,
                     previewImageUrl = internal?.previewImageUrl,
@@ -43,7 +43,7 @@ data class TwitterBookmarkEntity(
             null
         }
 
-        data class MetadataEntity(
+        data class InternalMetadata(
             val title: String? = null,
             val description: String? = null,
             val previewImageUrl: String? = null,

@@ -5,8 +5,8 @@ import androidx.savedstate.SavedStateRegistryOwner
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import dog.shebang.data.datasource.remote.RemoteCategoryDataSource
 import dog.shebang.data.repository.BookmarkRepository
+import dog.shebang.data.repository.CategoryRepository
 import dog.shebang.data.repository.MetadataRepository
 import dog.shebang.model.Bookmark
 import dog.shebang.model.Category
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 class PostViewModel @AssistedInject constructor(
     private val metadataRepository: MetadataRepository,
     private val bookmarkRepository: BookmarkRepository,
-    private val remoteCategoryDataSource: RemoteCategoryDataSource,
+    private val categoryRepository: CategoryRepository,
     @Assisted private val savedStateHandle: SavedStateHandle,
     @Assisted private val url: String?
 ) : ViewModel() {
@@ -39,7 +39,7 @@ class PostViewModel @AssistedInject constructor(
     }
 
     fun saveCategory(category: Category) = viewModelScope.launch {
-        remoteCategoryDataSource.saveCategory(category)
+        categoryRepository.saveCategory(category)
         mutableCategoryLiveData.value = category
     }
 
