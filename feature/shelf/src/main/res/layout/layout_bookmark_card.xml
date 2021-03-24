@@ -23,12 +23,10 @@
 
             <TextView
                 android:id="@+id/title_text_view"
-                style="@style/BookmarkShelf.Widget.TextView.Preview"
+                style="@style/BookmarkShelf.Widget.TextView.Preview.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:maxLines="1"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/preview_image_view"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -46,12 +44,10 @@
 
             <TextView
                 android:id="@+id/description_text_view"
-                style="@style/BookmarkShelf.Widget.TextView.Preview"
+                style="@style/BookmarkShelf.Widget.TextView.Preview.Description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:maxLines="4"
-                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
