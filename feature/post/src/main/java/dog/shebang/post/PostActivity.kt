@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.wada811.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import dog.shebang.core.ext.listener
 import dog.shebang.model.*
 import dog.shebang.post.databinding.ActivityPostBinding
 import javax.inject.Inject
@@ -51,6 +52,10 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
 
                                 Glide.with(this@PostActivity)
                                     .load(metadata.previewImageUrl)
+                                    .listener(
+                                        onSuccess = { previewImageView.isVisible = true },
+                                        onFailure = { previewImageView.isVisible = false }
+                                    )
                                     .into(previewImageView)
                             }
 
@@ -64,12 +69,20 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
 
                                 Glide.with(this@PostActivity)
                                     .load(imageUrl)
+                                    .listener(
+                                        onSuccess = { previewImageView.isVisible = true },
+                                        onFailure = { previewImageView.isVisible = false }
+                                    )
                                     .into(previewImageView)
 
                                 previewImageView.isVisible = imageUrl != null
 
                                 Glide.with(this@PostActivity)
                                     .load(metadata.authorProfileUrl)
+                                    .listener(
+                                        onSuccess = { authorProfileImageView.isVisible = true },
+                                        onFailure = { authorProfileImageView.isVisible = false }
+                                    )
                                     .circleCrop()
                                     .into(authorProfileImageView)
                             }
