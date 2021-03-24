@@ -18,9 +18,9 @@ fun <T> RequestBuilder<T>.listener(
             target: Target<T>?,
             isFirstResource: Boolean
         ): Boolean {
-            onSuccess()
+            onFailure()
 
-            return true
+            return false
         }
 
         override fun onResourceReady(
@@ -30,9 +30,9 @@ fun <T> RequestBuilder<T>.listener(
             dataSource: DataSource?,
             isFirstResource: Boolean
         ): Boolean {
-            onFailure()
+            onSuccess()
 
-            return true
+            return false
         }
     })
 }
