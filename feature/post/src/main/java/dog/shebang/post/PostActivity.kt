@@ -3,11 +3,11 @@ package dog.shebang.post
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.wada811.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dog.shebang.core.ext.listener
@@ -33,102 +33,84 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.metadataLiveData.observe(this) { loadState ->
+        viewModel.uiModel.observe(this) { uiModel ->
             binding.apply {
+                imageProgressBar.isVisible = uiModel.isLoading
 
-                when (loadState) {
-                    is LoadState.Error -> Log.d(
-                        "LoadState",
-                        "onCreate: error ${loadState.throwable.cause?.message}"
-                    )
-                    is LoadState.Loading -> imageProgressBar.isVisible = true
-                    is LoadState.Loaded -> {
-                        imageProgressBar.isVisible = false
-
-                        when (val metadata = loadState.value) {
-                            is Metadata.DefaultMetadata -> {
-                                titleTextView.text = metadata.title
-                                descriptionTextView.text = metadata.description
-
-                                Glide.with(this@PostActivity)
-                                    .load(metadata.previewImageUrl)
-                                    .listener(
-                                        onSuccess = { previewImageView.isVisible = true },
-                                        onFailure = { previewImageView.isVisible = false }
-                                    )
-                                    .into(previewImageView)
-                            }
-
-                            is Metadata.TwitterMetadata -> {
-                                authorNameTextView.text = metadata.authorName
-                                descriptionTextView.text = metadata.text
-
-                                val imageUrl = metadata.internal?.let {
-                                    it.mediaImageUrl ?: it.previewImageUrl
-                                }
-
-                                Glide.with(this@PostActivity)
-                                    .load(imageUrl)
-                                    .listener(
-                                        onSuccess = { previewImageView.isVisible = true },
-                                        onFailure = { previewImageView.isVisible = false }
-                                    )
-                                    .into(previewImageView)
-
-                                previewImageView.isVisible = imageUrl != null
-
-                                Glide.with(this@PostActivity)
-                                    .load(metadata.authorProfileUrl)
-                                    .listener(
-                                        onSuccess = { authorProfileImageView.isVisible = true },
-                                        onFailure = { authorProfileImageView.isVisible = false }
-                                    )
-                                    .circleCrop()
-                                    .into(authorProfileImageView)
-                            }
-                        }
-                    }
+                uiModel.error?.message?.also {
+                    Snackbar.make(root, it, Snackbar.LENGTH_INDEFINITE).show()
                 }
-            }
-        }
 
-        binding.apply {
+                uiModel.defaultMetadata?.also {
+                    titleTextView.text = it.title
+                    descriptionTextView.text = it.description
 
-            addButton.setOnClickListener {
-                val loadState = viewModel.metadataLiveData.value ?: return@setOnClickListener
-                val category = viewModel.categoryLiveData.value ?: return@setOnClickListener
+                    Glide.with(this@PostActivity)
+                        .load(it.previewImageUrl)
+                        .listener(
+                            onSuccess = { previewImageView.isVisible = true },
+                            onFailure = { previewImageView.isVisible = false }
+                        )
+                        .into(previewImageView)
+                }
 
-                loadState.ifIsLoaded { metadata ->
+                uiModel.twitterMetadata?.also {
+                    val imageUrl = it.internal?.let { internal ->
+                        internal.mediaImageUrl ?: internal.previewImageUrl
+                    }
+
+                    authorNameTextView.text = it.authorName
+                    descriptionTextView.text = it.text
+
+                    Glide.with(this@PostActivity)
+                        .load(imageUrl)
+                        .listener(
+                            onSuccess = { previewImageView.isVisible = true },
+                            onFailure = { previewImageView.isVisible = false }
+                        )
+                        .into(previewImageView)
+
+                    Glide.with(this@PostActivity)
+                        .load(it.authorProfileUrl)
+                        .listener(
+                            onSuccess = { authorProfileImageView.isVisible = true },
+                            onFailure = { authorProfileImageView.isVisible = false }
+                        )
+                        .circleCrop()
+                        .into(authorProfileImageView)
+                }
+
+                uiModel.category.also {
+                    categoryChip.text = it.name
+                    categoryChip.chipBackgroundColor = ColorStateList.valueOf(it.color.value)
+                }
+
+                addButton.setOnClickListener {
+                    val metadata = uiModel.defaultMetadata
+                        ?: uiModel.twitterMetadata
+                        ?: return@setOnClickListener
+
+                    val category = uiModel.category
+
                     val bookmark = when (metadata) {
                         is Metadata.DefaultMetadata -> Bookmark.DefaultBookmark(metadata, category)
                         is Metadata.TwitterMetadata -> Bookmark.TwitterBookmark(metadata, category)
                     }
 
                     viewModel.storeBookmark(bookmark)
-
-                    finish()
-                }
-            }
-
-            categoryChip.setOnClickListener {
-                val onAddCategoryButtonClickListener: (Category) -> Unit = {
-                    viewModel.saveCategory(it)
                 }
 
-                val onChipClickListener: (Category) -> Unit = {
-                    viewModel.setCategory(it)
+                categoryChip.setOnClickListener {
+                    showBottomSheet(
+                        onChipClickListener = viewModel::setCategory,
+                        onAddCategoryButtonClickListener = {
+                            viewModel.saveCategory(it)
+                            finish()
+                        }
+                    )
                 }
-
-                showBottomSheet(onAddCategoryButtonClickListener, onChipClickListener)
             }
-
-            viewModel.categoryLiveData.observe(this@PostActivity) {
-                categoryChip.text = it.name
-                categoryChip.chipBackgroundColor = ColorStateList.valueOf(it.color.value)
-            }
-
         }
-
     }
 
     private fun Intent.handleIntent(): String? {
