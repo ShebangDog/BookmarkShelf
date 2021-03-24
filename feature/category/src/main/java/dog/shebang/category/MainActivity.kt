@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         val name = item.title.toString()
 
                         viewModel.onCategorySelected(name)
-
+//以前の値が使われている
                         navigateToShelfByCategory(navController, it)
                         categoryDrawerLayout.closeDrawer(categorySelectorNavigationView)
 
