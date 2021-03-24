@@ -47,4 +47,9 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <style name="BookmarkShelf.Widget.TextView.Preview.Title">
+        <item name="android:maxLines">1</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
