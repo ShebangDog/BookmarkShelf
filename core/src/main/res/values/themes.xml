@@ -4,11 +4,9 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/brown_300</item>
         <item name="colorPrimaryVariant">@color/brown_500</item>
-        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
@@ -43,6 +41,10 @@
         <item name="cornerSizeBottomRight">40%</item>
         <item name="cornerSizeBottomLeft">10%</item>
         <item name="cornerSizeTopLeft">10%</item>
+    </style>
+
+    <style name="BookmarkShelf.Widget.TextView.Preview" parent="">
+        <item name="android:ellipsize">end</item>
     </style>
 
 </resources>
