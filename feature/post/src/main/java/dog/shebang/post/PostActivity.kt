@@ -98,15 +98,13 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
                     }
 
                     viewModel.storeBookmark(bookmark)
+                    finish()
                 }
 
                 categoryChip.setOnClickListener {
                     showBottomSheet(
                         onChipClickListener = viewModel::setCategory,
-                        onAddCategoryButtonClickListener = {
-                            viewModel.saveCategory(it)
-                            finish()
-                        }
+                        onAddCategoryButtonClickListener = viewModel::saveCategory
                     )
                 }
             }
