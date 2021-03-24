@@ -2,11 +2,9 @@ package dog.shebang.category
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEach
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -57,15 +55,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     )
                 }
 
-                categorySelectorNavigationView.setNavigationItemSelectedListener(
-                    OnNavigationCategorySelectedListener(
-                        viewModel = viewModel,
-                        categoryList = uiModel.categoryList,
-                        drawerLayout = categoryDrawerLayout,
-                        navigationView = categorySelectorNavigationView,
-                        navigateToShelf = { navigateToShelfByCategory(navController, it) }
-                    )
-                )
+                uiModel.selectedCategory.also {
+                    categorySelectorNavigationView.setNavigationItemSelectedListener { item ->
+                        item.isCheckable = true
+                        item.isChecked = true
+
+                        val name = item.title.toString()
+
+                        viewModel.onCategorySelected(name)
+
+                        navigateToShelfByCategory(navController, it)
+                        categoryDrawerLayout.closeDrawer(categorySelectorNavigationView)
+
+                        true
+                    }
+                }
             }
         }
     }
@@ -133,30 +137,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             } catch (e: ApiException) {
 
             }
-        }
-    }
-
-    class OnNavigationCategorySelectedListener(
-        private val viewModel: MainViewModel,
-        private val categoryList: List<Category>,
-        private val drawerLayout: DrawerLayout,
-        private val navigationView: NavigationView,
-        private val navigateToShelf: (Category) -> Unit
-    ) : NavigationView.OnNavigationItemSelectedListener {
-
-        override fun onNavigationItemSelected(item: MenuItem): Boolean {
-            item.isCheckable = true
-            item.isChecked = true
-
-            val name = item.title.toString()
-            val category = categoryList.firstOrNull { it.name == name } ?: Category.defaultCategory
-
-            viewModel.onCategorySelected(category)
-
-            navigateToShelf(category)
-            drawerLayout.closeDrawer(navigationView)
-
-            return true
         }
     }
 
