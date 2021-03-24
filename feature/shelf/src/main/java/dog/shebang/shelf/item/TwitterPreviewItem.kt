@@ -4,6 +4,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.xwray.groupie.viewbinding.BindableItem
+import dog.shebang.core.ext.listener
 import dog.shebang.model.Bookmark
 import dog.shebang.shelf.R
 import dog.shebang.shelf.databinding.LayoutTwitterCardBinding
@@ -38,14 +39,20 @@ class TwitterPreviewItem(
                 it.mediaImageUrl ?: it.previewImageUrl
             }
 
-            previewImageView.isVisible = imageUrl != null
-
             Glide.with(root)
                 .load(imageUrl)
+                .listener(
+                    onSuccess = { previewImageView.isVisible = true },
+                    onFailure = { previewImageView.isVisible = false }
+                )
                 .into(previewImageView)
 
             Glide.with(root)
                 .load(authorProfileUrl)
+                .listener(
+                    onSuccess = { authorProfileImageView.isVisible = true },
+                    onFailure = { authorProfileImageView.isVisible = false }
+                )
                 .circleCrop()
                 .into(authorProfileImageView)
         }
