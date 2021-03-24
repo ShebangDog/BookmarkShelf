@@ -9,7 +9,6 @@ import androidx.core.view.forEach
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
@@ -42,30 +41,32 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         val navController = navHostFragment.navController
 
-        binding.apply {
-            categorySelectorNavigationView.apply {
-                setupWithNavController(navController)
-                setNavigationItemSelectedListener(
+        viewModel.uiModel.observe(this) { uiModel ->
+            binding.apply {
+
+                topAppBar.setOnClickListener {
+                    categoryDrawerLayout.open()
+                }
+
+                uiModel.categoryList.also {
+                    val newCategoryList = it + Category.defaultCategory
+
+                    categorySelectorNavigationView.updateMenu(
+                        newCategoryList,
+                        uiModel.selectedCategory
+                    )
+                }
+
+                categorySelectorNavigationView.setNavigationItemSelectedListener(
                     OnNavigationCategorySelectedListener(
                         viewModel = viewModel,
+                        categoryList = uiModel.categoryList,
                         drawerLayout = categoryDrawerLayout,
                         navigationView = categorySelectorNavigationView,
                         navigateToShelf = { navigateToShelfByCategory(navController, it) }
                     )
                 )
             }
-
-            topAppBar.setOnClickListener {
-                categoryDrawerLayout.open()
-            }
-
-            viewModel.categoryListLiveData.observe(this@MainActivity) { categoryList ->
-                val selectedCategory = viewModel.selectedCategoryLiveData.value ?: return@observe
-                val newCategoryList = categoryList + Category.defaultCategory
-
-                categorySelectorNavigationView.updateMenu(newCategoryList, selectedCategory)
-            }
-
         }
     }
 
@@ -137,6 +138,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     class OnNavigationCategorySelectedListener(
         private val viewModel: MainViewModel,
+        private val categoryList: List<Category>,
         private val drawerLayout: DrawerLayout,
         private val navigationView: NavigationView,
         private val navigateToShelf: (Category) -> Unit
@@ -146,10 +148,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             item.isCheckable = true
             item.isChecked = true
 
-            val categoryList = viewModel.categoryListLiveData.value
             val name = item.title.toString()
-
-            val category = categoryList?.firstOrNull { it.name == name } ?: Category.defaultCategory
+            val category = categoryList.firstOrNull { it.name == name } ?: Category.defaultCategory
 
             viewModel.onCategorySelected(category)
 
