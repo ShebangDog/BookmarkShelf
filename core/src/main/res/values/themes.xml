@@ -52,4 +52,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="BookmarkShelf.Widget.TextView.Preview.Description">
+        <item name="android:maxLines">2</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>
