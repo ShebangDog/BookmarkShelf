@@ -2,9 +2,11 @@ package dog.shebang.category
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEach
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -20,6 +22,8 @@ import dog.shebang.category.databinding.ActivityMainBinding
 import dog.shebang.data.firestore.FirebaseAuthentication
 import dog.shebang.model.Category
 import dog.shebang.shelf.ShelfFragmentDirections
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -39,37 +43,35 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         val navController = navHostFragment.navController
 
-        viewModel.uiModel.observe(this) { uiModel ->
-            binding.apply {
+        lifecycle.addObserver(viewModel.lifecycleStateFlow)
 
-                topAppBar.setOnClickListener {
-                    categoryDrawerLayout.open()
+        binding.apply {
+            topAppBar.setOnClickListener {
+                categoryDrawerLayout.open()
+            }
+
+            lifecycleScope.launch {
+                viewModel.selectedCategoryFlow.collect {
+                    navigateToShelfByCategory(navController, it)
+                    categoryDrawerLayout.closeDrawer(categorySelectorNavigationView)
                 }
+            }
 
-                uiModel.categoryList.also {
-                    val newCategoryList = it + Category.defaultCategory
+            viewModel.uiModel.observe(this@MainActivity) { uiModel ->
+                val newCategoryList = uiModel.categoryList + Category.defaultCategory
 
-                    categorySelectorNavigationView.updateMenu(
-                        newCategoryList,
-                        uiModel.selectedCategory
-                    )
-                }
+                categorySelectorNavigationView.updateMenu(newCategoryList)
+            }
 
-                uiModel.selectedCategory.also {
-                    categorySelectorNavigationView.setNavigationItemSelectedListener { item ->
-                        item.isCheckable = true
-                        item.isChecked = true
+            categorySelectorNavigationView.setNavigationItemSelectedListener { item ->
+                item.isCheckable = true
+                item.isChecked = true
 
-                        val name = item.title.toString()
+                val name = item.title.toString()
 
-                        viewModel.onCategorySelected(name)
-//以前の値が使われている
-                        navigateToShelfByCategory(navController, it)
-                        categoryDrawerLayout.closeDrawer(categorySelectorNavigationView)
+                viewModel.selectCategory(name)
 
-                        true
-                    }
-                }
+                true
             }
         }
     }
@@ -77,28 +79,31 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun NavigationView.addCategory(
         order: Int,
         category: Category,
-        groupId: Int = R.id.group
+        groupId: Int = R.id.group,
+        propertyApplier: MenuItem.() -> Unit = {},
     ) {
 
-        menu.add(groupId, category.name.hashCode(), order, category.name)
+        menu.add(groupId, category.name.hashCode(), order, category.name).apply(propertyApplier)
     }
 
-    private fun NavigationView.updateMenu(itemList: List<Category>, selectedCategory: Category) {
+    private fun NavigationView.updateMenu(itemList: List<Category>) {
+        var checkedItem: MenuItem? = null
+        menu.forEach {
+            if (it.isChecked) {
+                checkedItem = it
+                return@forEach
+            }
+        }
 
         menu.clear()
         itemList.forEachIndexed { index, category ->
             addCategory(
                 itemList.size - index,
                 category
-            )
-        }
-
-        menu.forEach { menuItem ->
-            if (selectedCategory.name == menuItem.title) {
-                menuItem.isChecked = true
-                menuItem.isCheckable = true
-
-                return@forEach
+            ) {
+                val isSelectedCategory = (category.name == checkedItem?.title)
+                isCheckable = isSelectedCategory
+                isChecked = isSelectedCategory
             }
         }
     }
