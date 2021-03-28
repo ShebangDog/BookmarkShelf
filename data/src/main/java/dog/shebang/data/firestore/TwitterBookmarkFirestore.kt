@@ -1,6 +1,5 @@
 package dog.shebang.data.firestore
 
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dog.shebang.data.firestore.entity.TwitterBookmarkEntity
@@ -9,10 +8,7 @@ import dog.shebang.model.Bookmark
 import dog.shebang.model.Result
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 interface TwitterBookmarkFirestore {
@@ -27,31 +23,35 @@ class TwitterBookmarkFirestoreImpl @Inject constructor() : TwitterBookmarkFirest
     private val firestore = Firebase.firestore
 
     @ExperimentalCoroutinesApi
-    override fun fetchBookmarkList(): Flow<Result<List<Bookmark.TwitterBookmark>>> = callbackFlow {
-        val listenerRegistration = try {
-            val uid = Firebase.auth.currentUser?.uid ?: throw FirebaseNotLoggedException
+    override fun fetchBookmarkList(): Flow<Result<List<Bookmark.TwitterBookmark>>> =
+        FirebaseAuthentication.currentUser.flatMapLatest { user ->
+            callbackFlow {
+                val listenerRegistration = try {
+                    val uid = user?.uid ?: throw FirebaseNotLoggedException
 
-            firestore.twitterBookmarksRef(uid)
-                .addSnapshotListener { snapshot, exception ->
-                    exception?.run { throw this }
+                    firestore.twitterBookmarksRef(uid)
+                        .addSnapshotListener { snapshot, exception ->
+                            exception?.run { throw this }
 
-                    val entityList = snapshot?.toObjects(TwitterBookmarkEntity::class.java)
-                    val bookmarkList = entityList
-                        ?.mapNotNull { it.modelOrNull() }
-                        ?: emptyList()
+                            val entityList =
+                                snapshot?.toObjects(TwitterBookmarkEntity::class.java)
+                            val bookmarkList = entityList
+                                ?.mapNotNull { it.modelOrNull() }
+                                ?: emptyList()
 
-                    offer(Result.Success(bookmarkList))
+                            offer(Result.Success(bookmarkList))
 
+                        }
+
+                } catch (throwable: Throwable) {
+
+                    offer(Result.Failure<Nothing>(throwable))
+                    null
                 }
 
-        } catch (throwable: Throwable) {
-
-            offer(Result.Failure<Nothing>(throwable))
-            null
+                awaitClose { listenerRegistration?.remove() }
+            }
         }
-
-        awaitClose { listenerRegistration?.remove() }
-    }
 
     @ExperimentalCoroutinesApi
     override suspend fun storeBookmark(bookmark: Bookmark.TwitterBookmark) {
