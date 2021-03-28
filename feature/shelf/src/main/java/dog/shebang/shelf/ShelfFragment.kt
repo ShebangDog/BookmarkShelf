@@ -9,7 +9,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.snackbar.Snackbar
 import com.wada811.viewbinding.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.viewbinding.GroupieViewHolder
@@ -62,9 +61,9 @@ class ShelfFragment : Fragment(R.layout.fragment_shelf) {
                 }
 
                 uiModel.error.also {
-                    if (it != null) {
-                        Snackbar.make(root, it.message.orEmpty(), Snackbar.LENGTH_INDEFINITE)
-                    }
+//                    if (it != null) {
+//                        Snackbar.make(root, it.message.orEmpty(), Snackbar.LENGTH_INDEFINITE).show()
+//                    }
                 }
 
                 uiModel.bookmarkList.also { bookmarkList ->

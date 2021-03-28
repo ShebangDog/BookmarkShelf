@@ -8,7 +8,10 @@ import dog.shebang.model.Bookmark
 import dog.shebang.model.Result
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
 interface DefaultBookmarkFirestore {
@@ -56,7 +59,7 @@ class DefaultBookmarkFirestoreImpl @Inject constructor() : DefaultBookmarkFirest
 
     @ExperimentalCoroutinesApi
     override suspend fun storeBookmark(bookmark: Bookmark.DefaultBookmark) {
-        val uid = FirebaseAuthentication.currentUser.filterNotNull().first().uid
+        val uid = FirebaseAuthentication.currentUser.firstOrNull()?.uid ?: return
 
         firestore.defaultBookmarksRef(uid).add(bookmark)
     }

@@ -8,7 +8,10 @@ import dog.shebang.model.Bookmark
 import dog.shebang.model.Result
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
 interface TwitterBookmarkFirestore {
@@ -55,7 +58,7 @@ class TwitterBookmarkFirestoreImpl @Inject constructor() : TwitterBookmarkFirest
 
     @ExperimentalCoroutinesApi
     override suspend fun storeBookmark(bookmark: Bookmark.TwitterBookmark) {
-        val uid = FirebaseAuthentication.currentUser.filterNotNull().first().uid
+        val uid = FirebaseAuthentication.currentUser.firstOrNull()?.uid ?: return
 
         firestore.twitterBookmarksRef(uid).add(bookmark)
     }
