@@ -11,6 +11,7 @@ import dog.shebang.model.Category
 import dog.shebang.model.LoadState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 
 @Suppress("UNCHECKED_CAST")
 class ShelfViewModel @AssistedInject constructor(
@@ -19,11 +20,33 @@ class ShelfViewModel @AssistedInject constructor(
     @Assisted val category: Category
 ) : ViewModel() {
 
-    val bookmarkListLiveData = bookmarkListFlow()
+    data class UiModel(
+        val isLoading: Boolean = true,
+        val error: Throwable? = null,
+        val bookmarkList: List<Bookmark> = emptyList(),
+    )
+
+    private val filteredBookmarkListFlow = bookmarkListFlow()
         .filterByCategory {
             if (category.isDefault()) true
             else it == category
-        }.asLiveData()
+        }
+
+    val uiModel = filteredBookmarkListFlow.map { loadState ->
+        val isLoading = loadState is LoadState.Loading
+
+        try {
+            UiModel(
+                isLoading = isLoading,
+                bookmarkList = (loadState as LoadState.Loaded).value
+            )
+        } catch (throwable: Throwable) {
+            UiModel(
+                false,
+                throwable,
+            )
+        }
+    }.onStart { emit(UiModel()) }.asLiveData()
 
     private fun bookmarkListFlow() = bookmarkRepository.fetchBookmarkList()
     private fun Flow<LoadState<List<Bookmark>>>.filterByCategory(

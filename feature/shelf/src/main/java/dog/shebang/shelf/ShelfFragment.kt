@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.wada811.viewbinding.viewBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.viewbinding.GroupieViewHolder
@@ -17,7 +18,6 @@ import dog.shebang.core.ext.setSpan
 import dog.shebang.model.Bookmark
 import dog.shebang.model.Category
 import dog.shebang.model.Color
-import dog.shebang.model.LoadState
 import dog.shebang.shelf.databinding.FragmentShelfBinding
 import dog.shebang.shelf.databinding.LayoutBookmarkCardBinding
 import dog.shebang.shelf.item.DefaultPreviewItem
@@ -54,25 +54,27 @@ class ShelfFragment : Fragment(R.layout.fragment_shelf) {
             shelfRecyclerView.setSpan(all = 32)
 
             shelfRecyclerView.adapter = adapter
-        }
 
-        viewModel.bookmarkListLiveData.observe(viewLifecycleOwner) { loadState ->
+            viewModel.uiModel.observe(viewLifecycleOwner) { uiModel ->
 
-            val bindableItemProvider: BindableItemProvider = { bookmark, listener ->
-                when (bookmark) {
-                    is Bookmark.DefaultBookmark -> DefaultPreviewItem(bookmark, listener)
-                    is Bookmark.TwitterBookmark -> TwitterPreviewItem(bookmark, listener)
+                uiModel.isLoading.also {
+                    progressBar.isVisible = it
                 }
-            }
 
-            when (loadState) {
-                is LoadState.Error -> {
+                uiModel.error.also {
+                    if (it != null) {
+                        Snackbar.make(root, it.message.orEmpty(), Snackbar.LENGTH_INDEFINITE)
+                    }
                 }
-                is LoadState.Loading -> binding.progressBar.isVisible = true
-                is LoadState.Loaded -> {
-                    binding.progressBar.isVisible = false
 
-                    val bookmarkList = loadState.value
+                uiModel.bookmarkList.also { bookmarkList ->
+                    val bindableItemProvider: BindableItemProvider = { bookmark, listener ->
+                        when (bookmark) {
+                            is Bookmark.DefaultBookmark -> DefaultPreviewItem(bookmark, listener)
+                            is Bookmark.TwitterBookmark -> TwitterPreviewItem(bookmark, listener)
+                        }
+                    }
+
                     val bookmarkItemList = bookmarkList.map {
                         bindableItemProvider(it) { _, url -> browse(url) }
                     }
