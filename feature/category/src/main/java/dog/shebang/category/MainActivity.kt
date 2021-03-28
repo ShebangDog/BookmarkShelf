@@ -13,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -22,7 +23,9 @@ import dog.shebang.category.databinding.ActivityMainBinding
 import dog.shebang.data.firestore.FirebaseAuthentication
 import dog.shebang.model.Category
 import dog.shebang.shelf.ShelfFragmentDirections
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -73,6 +76,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
                 true
             }
+
+            Snackbar.make(root, "aaa", Snackbar.LENGTH_INDEFINITE).setAction(
+                "logout"
+            ) { FirebaseAuthentication.signOut() }.show()
         }
     }
 
@@ -108,16 +115,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
     }
 
+    @ExperimentalCoroutinesApi
     override fun onStart() {
         super.onStart()
 
-        if (auth.currentUser == null) {
-            googleSignInClient = FirebaseAuthentication.getClient(
-                this,
-                getString(R.string.default_web_client_id)
-            )
+        lifecycleScope.launch {
+            val user = FirebaseAuthentication.currentUser.firstOrNull()
 
-            showSignInIntent()
+            if (user == null) {
+                googleSignInClient = FirebaseAuthentication.getClient(
+                    this@MainActivity,
+                    getString(R.string.default_web_client_id)
+                )
+
+                showSignInIntent()
+            }
         }
     }
 
