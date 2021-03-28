@@ -33,8 +33,16 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.uiModel.observe(this) { uiModel ->
-            binding.apply {
+        binding.apply {
+            categoryChip.setOnClickListener {
+                showBottomSheet(
+                    onChipClickListener = viewModel::setCategory,
+                    onAddCategoryButtonClickListener = viewModel::saveCategory
+                )
+            }
+
+            viewModel.uiModel.observe(this@PostActivity) { uiModel ->
+
                 imageProgressBar.isVisible = uiModel.isLoading
 
                 uiModel.error?.message?.also {
@@ -99,13 +107,6 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
 
                     viewModel.storeBookmark(bookmark)
                     finish()
-                }
-
-                categoryChip.setOnClickListener {
-                    showBottomSheet(
-                        onChipClickListener = viewModel::setCategory,
-                        onAddCategoryButtonClickListener = viewModel::saveCategory
-                    )
                 }
             }
         }
