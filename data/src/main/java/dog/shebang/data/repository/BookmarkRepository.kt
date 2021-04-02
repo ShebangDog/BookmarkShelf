@@ -1,19 +1,19 @@
 package dog.shebang.data.repository
 
+import android.util.Log
 import dog.shebang.data.firestore.DefaultBookmarkFirestore
+import dog.shebang.data.firestore.FirebaseNotLoggedException
 import dog.shebang.data.firestore.TwitterBookmarkFirestore
 import dog.shebang.model.Bookmark
 import dog.shebang.model.LoadState
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 interface BookmarkRepository {
 
-    fun fetchBookmarkList(): Flow<LoadState<List<Bookmark>>>
+    fun fetchBookmarkList(uid: String?): Flow<LoadState<List<Bookmark>>>
 
-    suspend fun storeBookmark(bookmark: Bookmark)
+    suspend fun storeBookmark(uid: String?, bookmark: Bookmark)
 }
 
 class DefaultBookmarkRepository @Inject constructor(
@@ -21,28 +21,36 @@ class DefaultBookmarkRepository @Inject constructor(
     private val twitterBookmarkFirestore: TwitterBookmarkFirestore
 ) : BookmarkRepository {
 
-    override fun fetchBookmarkList(): Flow<LoadState<List<Bookmark>>> {
-        defaultBookmarkFirestore.fetchBookmarkList()
+    override fun fetchBookmarkList(uid: String?) = flow {
+        Log.d("AYUMU", "fetchBookmarkList: uid: $uid")
 
-        return combine(
-            defaultBookmarkFirestore.fetchBookmarkList(),
-            twitterBookmarkFirestore.fetchBookmarkList()
-        ) { defaultBookmark, twitterBookmark ->
+        if (uid == null) {
+            emit(LoadState.Error(FirebaseNotLoggedException))
+            return@flow
+        }
 
-            val defaultLoadState = defaultBookmark.toLoadState()
-            val twitterLoadState = twitterBookmark.toLoadState()
+        emitAll(
+            combine(
+                defaultBookmarkFirestore.fetchBookmarkList(uid),
+                twitterBookmarkFirestore.fetchBookmarkList(uid)
+            ) { defaultBookmark, twitterBookmark ->
 
-            LoadState.map(defaultLoadState, twitterLoadState) { defaultList, twitterList ->
-                defaultList + twitterList
+                val defaultLoadState = defaultBookmark.toLoadState()
+                val twitterLoadState = twitterBookmark.toLoadState()
+
+                LoadState.map(defaultLoadState, twitterLoadState) { defaultList, twitterList ->
+                    defaultList + twitterList
+                }
             }
-        }.onStart { emit(LoadState.Loading) }
-    }
+        )
+    }.onStart { emit(LoadState.Loading) }
 
-    override suspend fun storeBookmark(bookmark: Bookmark) {
+    override suspend fun storeBookmark(uid: String?, bookmark: Bookmark) {
+        uid ?: return
 
         when (bookmark) {
-            is Bookmark.DefaultBookmark -> defaultBookmarkFirestore.storeBookmark(bookmark)
-            is Bookmark.TwitterBookmark -> twitterBookmarkFirestore.storeBookmark(bookmark)
+            is Bookmark.DefaultBookmark -> defaultBookmarkFirestore.storeBookmark(uid, bookmark)
+            is Bookmark.TwitterBookmark -> twitterBookmarkFirestore.storeBookmark(uid, bookmark)
         }
     }
 }
