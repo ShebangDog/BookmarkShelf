@@ -46,6 +46,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         lifecycle.addObserver(viewModel.lifecycleStateFlow)
 
+        lifecycleScope.launch {
+            viewModel.userInfoFlow.collect {
+                viewModel.updateUserData(it?.uid)
+            }
+        }
+
         binding.apply {
             topAppBar.setOnClickListener {
                 categoryDrawerLayout.open()

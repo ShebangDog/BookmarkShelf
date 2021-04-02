@@ -20,14 +20,6 @@ class MainViewModel @Inject constructor(
     authViewModelDelegate: AuthViewModelDelegate
 ) : ViewModel(), AuthViewModelDelegate by authViewModelDelegate {
 
-    init {
-        viewModelScope.launch {
-            userInfoFlow.collect {
-                updateUserData(it?.uid)
-            }
-        }
-    }
-
     val lifecycleStateFlow = LifecycleStateFlow()
 
     data class UiModel(
