@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dog.shebang.core.AuthViewModelDelegate
 import dog.shebang.core.LifecycleStateFlow
 import dog.shebang.core.bufferUntilStarted
 import dog.shebang.data.repository.CategoryRepository
@@ -15,8 +16,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    categoryRepository: CategoryRepository
-) : ViewModel() {
+    private val categoryRepository: CategoryRepository,
+    authViewModelDelegate: AuthViewModelDelegate
+) : ViewModel(), AuthViewModelDelegate by authViewModelDelegate {
+
+    init {
+        viewModelScope.launch {
+            firebaseUserInfoFlow.collect {
+                updateUserData(it?.uid)
+            }
+        }
+    }
 
     val lifecycleStateFlow = LifecycleStateFlow()
 
@@ -24,14 +34,14 @@ class MainViewModel @Inject constructor(
         val categoryList: List<Category> = listOf()
     )
 
+    private val mutableCategoryListFlow = MutableStateFlow<List<Category>>(emptyList())
+
     private val mutableOnCategorySelected = MutableSharedFlow<Category>()
     val selectedCategoryFlow = mutableOnCategorySelected
         .bufferUntilStarted(lifecycleStateFlow)
         .shareIn(viewModelScope, SharingStarted.Eagerly)
 
-    private val categoryListFlow = categoryRepository.fetchCategoryList()
-        .filterIsInstance<LoadState.Loaded<List<Category>>>()
-        .map { it.value }
+    private val categoryListFlow = mutableCategoryListFlow
 
     val uiModel = categoryListFlow
         .map { categoryList -> UiModel(categoryList = categoryList) }
@@ -44,5 +54,13 @@ class MainViewModel @Inject constructor(
             .first() ?: Category.defaultCategory
 
         mutableOnCategorySelected.emit(category)
+    }
+
+    fun updateUserData(uid: String?) = viewModelScope.launch {
+        mutableCategoryListFlow.emitAll(
+            categoryRepository.fetchCategoryList(uid)
+                .filterIsInstance<LoadState.Loaded<List<Category>>>()
+                .map { it.value }
+        )
     }
 }
