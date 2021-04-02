@@ -5,6 +5,7 @@ import androidx.savedstate.SavedStateRegistryOwner
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import dog.shebang.core.AuthViewModelDelegate
 import dog.shebang.data.repository.BookmarkRepository
 import dog.shebang.data.repository.CategoryRepository
 import dog.shebang.data.repository.MetadataRepository
@@ -12,6 +13,7 @@ import dog.shebang.model.Bookmark
 import dog.shebang.model.Category
 import dog.shebang.model.LoadState
 import dog.shebang.model.Metadata
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -20,9 +22,13 @@ class PostViewModel @AssistedInject constructor(
     private val metadataRepository: MetadataRepository,
     private val bookmarkRepository: BookmarkRepository,
     private val categoryRepository: CategoryRepository,
+    authViewModelDelegate: AuthViewModelDelegate,
     @Assisted private val savedStateHandle: SavedStateHandle,
     @Assisted private val url: String?
-) : ViewModel() {
+) : ViewModel(), AuthViewModelDelegate by authViewModelDelegate {
+
+    val currentUserState = firebaseUserInfoFlow
+        .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     data class UiModel(
         val isLoading: Boolean = true,
@@ -67,13 +73,15 @@ class PostViewModel @AssistedInject constructor(
         .onStart { emit(UiModel()) }
         .asLiveData()
 
-    fun storeBookmark(bookmark: Bookmark) = viewModelScope.launch {
+    @ExperimentalCoroutinesApi
+    fun storeBookmark(uid: String?, bookmark: Bookmark) = viewModelScope.launch {
 
-        bookmarkRepository.storeBookmark(bookmark)
+        bookmarkRepository.storeBookmark(uid, bookmark)
     }
 
-    fun saveCategory(category: Category) = viewModelScope.launch {
-        categoryRepository.saveCategory(category)
+    @ExperimentalCoroutinesApi
+    fun saveCategory(uid: String?, category: Category) = viewModelScope.launch {
+        categoryRepository.saveCategory(uid, category)
         mutableCategoryStateFlow.value = category
     }
 

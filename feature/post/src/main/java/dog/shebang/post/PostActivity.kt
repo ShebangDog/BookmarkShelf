@@ -6,13 +6,17 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseUser
 import com.wada811.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dog.shebang.core.ext.listener
 import dog.shebang.model.*
 import dog.shebang.post.databinding.ActivityPostBinding
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -30,14 +34,28 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
         )
     }
 
+    private var firebaseUserState: FirebaseUser? = null
+
+    @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        lifecycleScope.launch {
+            viewModel.currentUserState.collect {
+                firebaseUserState = it
+            }
+        }
 
         binding.apply {
             categoryChip.setOnClickListener {
                 showBottomSheet(
                     onChipClickListener = viewModel::setCategory,
-                    onAddCategoryButtonClickListener = viewModel::saveCategory
+                    onAddCategoryButtonClickListener = {
+                        viewModel.saveCategory(
+                            firebaseUserState?.uid,
+                            it
+                        )
+                    }
                 )
             }
 
@@ -46,7 +64,6 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
                 imageProgressBar.isVisible = uiModel.isLoading
 
                 uiModel.error?.message?.also {
-                    Snackbar.make(root, it, Snackbar.LENGTH_INDEFINITE).show()
                 }
 
                 uiModel.defaultMetadata?.also {
@@ -105,7 +122,7 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
                         is Metadata.TwitterMetadata -> Bookmark.TwitterBookmark(metadata, category)
                     }
 
-                    viewModel.storeBookmark(bookmark)
+                    viewModel.storeBookmark(firebaseUserState?.uid, bookmark)
                     finish()
                 }
             }
