@@ -13,12 +13,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.wada811.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dog.shebang.category.databinding.ActivityMainBinding
+import dog.shebang.core.ext.SnackBarCallback
+import dog.shebang.core.ext.makeSignInSnackbar
 import dog.shebang.data.firestore.FirebaseAuthentication
 import dog.shebang.model.Category
 import dog.shebang.shelf.ShelfFragmentDirections
@@ -31,13 +34,19 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val binding: ActivityMainBinding by viewBinding()
     private val viewModel: MainViewModel by viewModels()
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var googleSignInClient: GoogleSignInClient
+    private val auth: FirebaseAuth by lazy { Firebase.auth }
+    private val googleSignInClient: GoogleSignInClient by lazy {
+        FirebaseAuthentication.getClient(
+            this@MainActivity,
+            getString(R.string.default_web_client_id)
+        )
+    }
+
+    private var lastSnackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        auth = Firebase.auth
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.container_fragment) as NavHostFragment
@@ -65,9 +74,38 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
 
             viewModel.uiModel.observe(this@MainActivity) { uiModel ->
-                val newCategoryList = uiModel.categoryList + Category.defaultCategory
 
-                categorySelectorNavigationView.updateMenu(newCategoryList)
+                uiModel.categoryList.also {
+                    val newCategoryList = it + Category.defaultCategory
+
+                    categorySelectorNavigationView.updateMenu(newCategoryList)
+                }
+
+                uiModel.signInState?.also { signInState ->
+                    val (
+                        isNotLoggedIn,
+                        errorMessage,
+                    ) = signInState
+
+                    val newSnackbar = makeSignInSnackbar(
+                        errorMessage.orEmpty(),
+                        object : SnackBarCallback() {
+                            override fun onDismissed(snackbar: Snackbar?, event: Int) {
+                                lastSnackbar?.removeCallback(this)
+                                lastSnackbar = null
+                            }
+
+                            override fun onShown(snackbar: Snackbar?) {
+                                lastSnackbar = snackbar
+                            }
+                        }
+                    ) {
+                        showSignInIntent()
+                    }
+
+                    if (isNotLoggedIn) newSnackbar.show()
+                    lastSnackbar?.dismiss()
+                }
             }
 
             categorySelectorNavigationView.setNavigationItemSelectedListener { item ->
@@ -119,15 +157,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onStart() {
         super.onStart()
 
-        if (Firebase.auth.currentUser != null) return
-
-        googleSignInClient = FirebaseAuthentication.getClient(
-            this@MainActivity,
-            getString(R.string.default_web_client_id)
-        )
+        if (auth.currentUser != null) return
 
         showSignInIntent()
-
     }
 
     private fun showSignInIntent() {
@@ -163,4 +195,5 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         navController.navigate(action)
     }
+
 }

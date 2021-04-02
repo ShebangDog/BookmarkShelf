@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dog.shebang.core.AuthViewModelDelegate
 import dog.shebang.core.LifecycleStateFlow
 import dog.shebang.core.bufferUntilStarted
+import dog.shebang.data.firestore.FirebaseNotLoggedException
 import dog.shebang.data.repository.CategoryRepository
 import dog.shebang.model.Category
 import dog.shebang.model.LoadState
@@ -23,10 +24,17 @@ class MainViewModel @Inject constructor(
     val lifecycleStateFlow = LifecycleStateFlow()
 
     data class UiModel(
+        val signInState: SignInState? = null,
         val categoryList: List<Category> = listOf()
     )
 
-    private val mutableCategoryListFlow = MutableStateFlow<List<Category>>(emptyList())
+    data class SignInState(
+        val isNotLoggedIn: Boolean,
+        val errorMessage: String?,
+    )
+
+    private val mutableCategoryListFlow =
+        MutableStateFlow<LoadState<List<Category>>>(LoadState.Loading)
 
     private val mutableOnCategorySelected = MutableSharedFlow<Category>()
     val selectedCategoryFlow = mutableOnCategorySelected
@@ -36,13 +44,28 @@ class MainViewModel @Inject constructor(
     private val categoryListFlow = mutableCategoryListFlow
 
     val uiModel = categoryListFlow
-        .map { categoryList -> UiModel(categoryList = categoryList) }
+        .map {
+            val isNotLoggedIn = it is LoadState.Error && it.throwable is FirebaseNotLoggedException
+            val errorMessage = if (it is LoadState.Error) it.throwable.message else null
+            val categoryList = if (it is LoadState.Loaded) it.value else emptyList()
+
+            val signInState = SignInState(
+                isNotLoggedIn = isNotLoggedIn,
+                errorMessage = errorMessage
+            )
+
+            UiModel(
+                signInState = signInState,
+                categoryList = categoryList
+            )
+        }
         .onStart { emit(UiModel()) }
         .asLiveData()
 
     fun selectCategory(name: String) = viewModelScope.launch {
         val category = categoryListFlow
-            .map { list -> list.firstOrNull { it.name == name } }
+            .map { if (it is LoadState.Loaded) it.value else null }
+            .map { list -> list?.firstOrNull { it.name == name } }
             .first() ?: Category.defaultCategory
 
         mutableOnCategorySelected.emit(category)
@@ -51,8 +74,6 @@ class MainViewModel @Inject constructor(
     fun updateUserData(uid: String?) = viewModelScope.launch {
         mutableCategoryListFlow.emitAll(
             categoryRepository.fetchCategoryList(uid)
-                .filterIsInstance<LoadState.Loaded<List<Category>>>()
-                .map { it.value }
         )
     }
 }

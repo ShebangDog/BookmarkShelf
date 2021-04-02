@@ -3,6 +3,11 @@ package dog.shebang.core.ext
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
+
+typealias SnackBarCallback = BaseTransientBottomBar.BaseCallback<Snackbar>
 
 fun RecyclerView.setSpan(
     left: Int? = null,
@@ -34,3 +39,12 @@ fun RecyclerView.setSpan(
 fun RecyclerView.setSpan(all: Int) {
     this.setSpan(all, all, all, all)
 }
+
+fun ViewBinding.makeSignInSnackbar(
+    message: String,
+    callback: SnackBarCallback,
+    action: (View) -> Unit
+): Snackbar = Snackbar
+    .make(root, message, Snackbar.LENGTH_INDEFINITE)
+    .addCallback(callback)
+    .setAction("SignIn", action)
