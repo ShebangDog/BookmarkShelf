@@ -27,7 +27,7 @@ class ShelfViewModel @AssistedInject constructor(
         val bookmarkList: List<Bookmark> = emptyList(),
     )
 
-    val currentUserState = firebaseUserInfoFlow
+    val currentUserState = userInfoFlow
         .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     fun updateUserData(uid: String?) = viewModelScope.launch {

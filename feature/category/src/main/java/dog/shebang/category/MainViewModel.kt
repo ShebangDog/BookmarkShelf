@@ -22,7 +22,7 @@ class MainViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            firebaseUserInfoFlow.collect {
+            userInfoFlow.collect {
                 updateUserData(it?.uid)
             }
         }
