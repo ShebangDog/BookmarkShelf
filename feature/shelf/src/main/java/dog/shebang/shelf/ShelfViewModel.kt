@@ -5,20 +5,21 @@ import androidx.savedstate.SavedStateRegistryOwner
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import dog.shebang.core.AuthViewModelDelegate
 import dog.shebang.data.repository.BookmarkRepository
 import dog.shebang.model.Bookmark
 import dog.shebang.model.Category
 import dog.shebang.model.LoadState
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 @Suppress("UNCHECKED_CAST")
 class ShelfViewModel @AssistedInject constructor(
     private val bookmarkRepository: BookmarkRepository,
+    authViewModelDelegate: AuthViewModelDelegate,
     @Assisted private val savedStateHandle: SavedStateHandle,
     @Assisted val category: Category
-) : ViewModel() {
+) : ViewModel(), AuthViewModelDelegate by authViewModelDelegate {
 
     data class UiModel(
         val isLoading: Boolean = true,
@@ -26,29 +27,43 @@ class ShelfViewModel @AssistedInject constructor(
         val bookmarkList: List<Bookmark> = emptyList(),
     )
 
-    private val filteredBookmarkListFlow = bookmarkListFlow()
+    val currentUserState = firebaseUserInfoFlow
+        .stateIn(viewModelScope, SharingStarted.Eagerly, null)
+
+    fun updateUserData(uid: String?) = viewModelScope.launch {
+        mutableBookmarkListFlow.emitAll(bookmarkListFlow(uid))
+    }
+
+    private val mutableBookmarkListFlow =
+        MutableStateFlow<LoadState<List<Bookmark>>>(LoadState.Loading)
+
+    private val filteredBookmarkListFlow = mutableBookmarkListFlow
         .filterByCategory {
             if (category.isDefault()) true
             else it == category
         }
 
     val uiModel = filteredBookmarkListFlow.map { loadState ->
-        val isLoading = loadState is LoadState.Loading
-
         try {
+            if (loadState is LoadState.Error) throw loadState.throwable
+
+            val isLoading = loadState is LoadState.Loading
+            val bookmarkList = if (loadState is LoadState.Loaded) loadState.value else null
+
             UiModel(
                 isLoading = isLoading,
-                bookmarkList = (loadState as LoadState.Loaded).value
+                bookmarkList = bookmarkList.orEmpty()
             )
         } catch (throwable: Throwable) {
             UiModel(
-                false,
-                throwable,
+                isLoading = false,
+                error = throwable,
             )
         }
     }.onStart { emit(UiModel()) }.asLiveData()
 
-    private fun bookmarkListFlow() = bookmarkRepository.fetchBookmarkList()
+    private fun bookmarkListFlow(uid: String?) = bookmarkRepository.fetchBookmarkList(uid)
+
     private fun Flow<LoadState<List<Bookmark>>>.filterByCategory(
         predicate: (Category) -> Boolean
     ) = this.map { loadState ->

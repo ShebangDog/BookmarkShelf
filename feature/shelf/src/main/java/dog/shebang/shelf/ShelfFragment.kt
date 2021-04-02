@@ -8,6 +8,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.wada811.viewbinding.viewBinding
 import com.xwray.groupie.GroupAdapter
@@ -21,6 +22,8 @@ import dog.shebang.shelf.databinding.FragmentShelfBinding
 import dog.shebang.shelf.databinding.LayoutBookmarkCardBinding
 import dog.shebang.shelf.item.DefaultPreviewItem
 import dog.shebang.shelf.item.TwitterPreviewItem
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -49,21 +52,20 @@ class ShelfFragment : Fragment(R.layout.fragment_shelf) {
 
         val adapter = GroupAdapter<GroupieViewHolder<LayoutBookmarkCardBinding>>()
 
+        lifecycleScope.launch {
+            viewModel.currentUserState.collect {
+                viewModel.updateUserData(it?.uid)
+            }
+        }
+
         binding.apply {
             shelfRecyclerView.setSpan(all = 32)
 
             shelfRecyclerView.adapter = adapter
-
             viewModel.uiModel.observe(viewLifecycleOwner) { uiModel ->
 
                 uiModel.isLoading.also {
                     progressBar.isVisible = it
-                }
-
-                uiModel.error.also {
-//                    if (it != null) {
-//                        Snackbar.make(root, it.message.orEmpty(), Snackbar.LENGTH_INDEFINITE).show()
-//                    }
                 }
 
                 uiModel.bookmarkList.also { bookmarkList ->
