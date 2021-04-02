@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.FirebaseUser
 import com.wada811.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dog.shebang.core.ext.listener
@@ -34,7 +33,7 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
         )
     }
 
-    private var firebaseUserState: FirebaseUser? = null
+    private var userState: UserInfo? = null
 
     @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +41,7 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
 
         lifecycleScope.launch {
             viewModel.currentUserState.collect {
-                firebaseUserState = it
+                userState = it
             }
         }
 
@@ -52,7 +51,7 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
                     onChipClickListener = viewModel::setCategory,
                     onAddCategoryButtonClickListener = {
                         viewModel.saveCategory(
-                            firebaseUserState?.uid,
+                            userState?.uid,
                             it
                         )
                     }
@@ -122,7 +121,7 @@ class PostActivity : AppCompatActivity(R.layout.activity_post) {
                         is Metadata.TwitterMetadata -> Bookmark.TwitterBookmark(metadata, category)
                     }
 
-                    viewModel.storeBookmark(firebaseUserState?.uid, bookmark)
+                    viewModel.storeBookmark(userState?.uid, bookmark)
                     finish()
                 }
             }

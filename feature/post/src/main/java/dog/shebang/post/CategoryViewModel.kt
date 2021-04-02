@@ -21,7 +21,7 @@ class CategoryViewModel @Inject constructor(
     authViewModelDelegate: AuthViewModelDelegate
 ) : ViewModel(), AuthViewModelDelegate by authViewModelDelegate {
 
-    val currentFirebaseUserState = firebaseUserInfoFlow
+    val currentFirebaseUserState = userInfoFlow
         .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     private val mutableCategoryListStateFlow =

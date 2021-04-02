@@ -27,7 +27,7 @@ class PostViewModel @AssistedInject constructor(
     @Assisted private val url: String?
 ) : ViewModel(), AuthViewModelDelegate by authViewModelDelegate {
 
-    val currentUserState = firebaseUserInfoFlow
+    val currentUserState = userInfoFlow
         .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     data class UiModel(
