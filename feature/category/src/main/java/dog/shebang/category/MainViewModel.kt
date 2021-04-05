@@ -25,6 +25,7 @@ class MainViewModel @Inject constructor(
 
     data class UiModel(
         val signInState: SignInState? = null,
+        val profileIconUrl: String? = null,
         val categoryList: List<Category> = listOf()
     )
 
@@ -43,24 +44,31 @@ class MainViewModel @Inject constructor(
 
     private val categoryListFlow = mutableCategoryListFlow
 
-    val uiModel = categoryListFlow
-        .map {
-            val isNotLoggedIn = it is LoadState.Error && it.throwable is FirebaseNotLoggedException
-            val errorMessage = if (it is LoadState.Error) it.throwable.message else null
-            val categoryList = if (it is LoadState.Loaded) it.value else emptyList()
+    val userState = userInfoFlow
+        .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
-            val signInState = SignInState(
-                isNotLoggedIn = isNotLoggedIn,
-                errorMessage = errorMessage
-            )
+    val uiModel = combine(
+        userState,
+        categoryListFlow
+    ) { user, loadState ->
 
-            UiModel(
-                signInState = signInState,
-                categoryList = categoryList
-            )
-        }
-        .onStart { emit(UiModel()) }
-        .asLiveData()
+        val errorMessage = if (loadState is LoadState.Error) loadState.throwable.message else null
+        val categoryList = if (loadState is LoadState.Loaded) loadState.value else emptyList()
+
+        val isNotLoggedIn =
+            loadState is LoadState.Error && loadState.throwable is FirebaseNotLoggedException
+
+        val signInState = SignInState(
+            isNotLoggedIn = isNotLoggedIn,
+            errorMessage = errorMessage
+        )
+
+        UiModel(
+            signInState = signInState,
+            categoryList = categoryList,
+            profileIconUrl = user?.profileIconUrl
+        )
+    }.onStart { emit(UiModel()) }.asLiveData()
 
     fun selectCategory(name: String) = viewModelScope.launch {
         val category = categoryListFlow

@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Singleton
 
 interface AuthViewModelDelegate {
+
     val userInfoFlow: Flow<UserInfo?>
 }
 
@@ -23,12 +24,12 @@ class DefaultAuthViewModelDelegate : AuthViewModelDelegate {
     private val firebaseAuth = Firebase.auth
 
     @ExperimentalCoroutinesApi
-    override val userInfoFlow: Flow<UserInfo?> = callbackFlow {
+    private val firebaseUserFlow: Flow<UserInfo?> = callbackFlow {
         val authStateListener: (FirebaseAuth) -> Unit = {
             try {
                 val userInfo = UserInfo(
                     uid = it.currentUser?.uid!!,
-                    profileIconUrl = it.currentUser?.photoUrl?.path
+                    profileIconUrl = it.currentUser?.photoUrl?.toString()
                 )
 
                 offer(userInfo)
@@ -41,6 +42,10 @@ class DefaultAuthViewModelDelegate : AuthViewModelDelegate {
 
         awaitClose { firebaseAuth.removeAuthStateListener(authStateListener) }
     }
+
+    @ExperimentalCoroutinesApi
+    override val userInfoFlow: Flow<UserInfo?> = firebaseUserFlow
+
 }
 
 @Module

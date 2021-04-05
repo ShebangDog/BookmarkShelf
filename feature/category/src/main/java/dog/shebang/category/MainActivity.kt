@@ -9,6 +9,7 @@ import androidx.core.view.forEach
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.common.api.ApiException
@@ -20,6 +21,7 @@ import com.google.firebase.ktx.Firebase
 import com.wada811.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dog.shebang.category.databinding.ActivityMainBinding
+import dog.shebang.category.databinding.LayoutDrawerHeaderBinding
 import dog.shebang.core.ext.SnackBarCallback
 import dog.shebang.core.ext.makeSignInSnackbar
 import dog.shebang.data.firestore.FirebaseAuthentication
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )
     }
 
-    private var lastSnackbar: Snackbar? = null
+    private var signInStateSnackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,22 +57,31 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         lifecycle.addObserver(viewModel.lifecycleStateFlow)
 
-        lifecycleScope.launch {
-            viewModel.userInfoFlow.collect {
-                viewModel.updateUserData(it?.uid)
-            }
-        }
-
         binding.apply {
+            val layoutHeaderBinding = layoutHeaderBinding()
+
             topAppBar.setOnClickListener {
                 categoryDrawerLayout.open()
             }
 
+            layoutHeaderBinding.profileIconImageView.setOnClickListener {
+                if (auth.currentUser == null) showSignInIntent()
+            }
+
             lifecycleScope.launch {
+
+                viewModel.userState.collect {
+                    viewModel.updateUserData(it?.uid)
+                }
+            }
+
+            lifecycleScope.launch {
+
                 viewModel.selectedCategoryFlow.collect {
                     navigateToShelfByCategory(navController, it)
                     categoryDrawerLayout.closeDrawer(categorySelectorNavigationView)
                 }
+
             }
 
             viewModel.uiModel.observe(this@MainActivity) { uiModel ->
@@ -81,30 +92,34 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     categorySelectorNavigationView.updateMenu(newCategoryList)
                 }
 
+                uiModel.profileIconUrl.also {
+
+                    Glide.with(layoutHeaderBinding.root)
+                        .load(it)
+                        .placeholder(R.drawable.ic_baseline_android_24)
+                        .circleCrop()
+                        .into(layoutHeaderBinding.profileIconImageView)
+                }
+
                 uiModel.signInState?.also { signInState ->
                     val (
                         isNotLoggedIn,
                         errorMessage,
                     ) = signInState
 
-                    val newSnackbar = makeSignInSnackbar(
+                    signInStateSnackbar?.dismiss()
+                    signInStateSnackbar = makeSignInSnackbar(
                         errorMessage.orEmpty(),
                         object : SnackBarCallback() {
                             override fun onDismissed(snackbar: Snackbar?, event: Int) {
-                                lastSnackbar?.removeCallback(this)
-                                lastSnackbar = null
-                            }
-
-                            override fun onShown(snackbar: Snackbar?) {
-                                lastSnackbar = snackbar
+                                snackbar?.removeCallback(this)
                             }
                         }
                     ) {
                         showSignInIntent()
                     }
 
-                    if (isNotLoggedIn) newSnackbar.show()
-                    lastSnackbar?.dismiss()
+                    if (isNotLoggedIn) signInStateSnackbar?.show()
                 }
             }
 
@@ -196,4 +211,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         navController.navigate(action)
     }
 
+    private fun (ActivityMainBinding).layoutHeaderBinding(): LayoutDrawerHeaderBinding {
+        val layoutHeader = categorySelectorNavigationView.getHeaderView(0)
+
+        return LayoutDrawerHeaderBinding.bind(layoutHeader)
+    }
 }
