@@ -1,5 +1,6 @@
 package dog.shebang.category
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -12,10 +13,12 @@ import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.wada811.viewbinding.viewBinding
@@ -24,7 +27,6 @@ import dog.shebang.category.databinding.ActivityMainBinding
 import dog.shebang.category.databinding.LayoutDrawerHeaderBinding
 import dog.shebang.core.ext.SnackBarCallback
 import dog.shebang.core.ext.makeSignInSnackbar
-import dog.shebang.data.firestore.FirebaseAuthentication
 import dog.shebang.model.Category
 import dog.shebang.shelf.ShelfFragmentDirections
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -38,13 +40,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val auth: FirebaseAuth by lazy { Firebase.auth }
     private val googleSignInClient: GoogleSignInClient by lazy {
-        FirebaseAuthentication.getClient(
+        getClient(
             this@MainActivity,
             getString(R.string.default_web_client_id)
         )
     }
 
     private var signInStateSnackbar: Snackbar? = null
+
+    companion object {
+        const val GOOGLE_AUTH_INTENT_REQUEST: Int = 232
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -186,20 +192,20 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(
             signInIntent,
-            FirebaseAuthentication.GOOGLE_AUTH_INTENT_REQUEST
+            GOOGLE_AUTH_INTENT_REQUEST
         )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == FirebaseAuthentication.GOOGLE_AUTH_INTENT_REQUEST) {
+        if (requestCode == GOOGLE_AUTH_INTENT_REQUEST) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
                 val idToken = account?.idToken ?: return
 
-                FirebaseAuthentication.signInWithGoogle(idToken)
+                signInWithGoogle(idToken)
             } catch (e: ApiException) {
 
             }
@@ -220,5 +226,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val layoutHeader = categorySelectorNavigationView.getHeaderView(0)
 
         return LayoutDrawerHeaderBinding.bind(layoutHeader)
+    }
+
+    private fun signInWithGoogle(idToken: String) {
+
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+    }
+
+    private fun getClient(context: Context, clientId: String): GoogleSignInClient {
+        val googleSignInOptions =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(clientId)
+                .requestEmail()
+                .build()
+
+        return GoogleSignIn.getClient(context, googleSignInOptions)
     }
 }
