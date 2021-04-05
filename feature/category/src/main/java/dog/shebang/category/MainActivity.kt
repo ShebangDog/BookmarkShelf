@@ -124,24 +124,22 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 }
 
                 uiModel.signInState?.also { signInState ->
-                    val (
-                        isNotLoggedIn,
-                        errorMessage,
-                    ) = signInState
 
                     signInStateSnackbar?.dismiss()
-                    signInStateSnackbar = makeSignInSnackbar(
-                        errorMessage.orEmpty(),
-                        object : SnackBarCallback() {
-                            override fun onDismissed(snackbar: Snackbar?, event: Int) {
-                                snackbar?.removeCallback(this)
+                    if (signInState is MainViewModel.SignInState.SignOut) {
+                        signInStateSnackbar = makeSignInSnackbar(
+                            signInState.message,
+                            object : SnackBarCallback() {
+                                override fun onDismissed(snackbar: Snackbar?, event: Int) {
+                                    snackbar?.removeCallback(this)
+                                }
                             }
+                        ) {
+                            showSignInIntent()
                         }
-                    ) {
-                        showSignInIntent()
-                    }
 
-                    if (isNotLoggedIn) signInStateSnackbar?.show()
+                        signInStateSnackbar?.show()
+                    }
                 }
             }
         }

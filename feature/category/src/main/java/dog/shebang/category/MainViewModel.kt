@@ -7,7 +7,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dog.shebang.core.LifecycleStateFlow
 import dog.shebang.core.bufferUntilStarted
 import dog.shebang.data.auth.AuthViewModelDelegate
-import dog.shebang.data.firestore.FirebaseNotLoggedException
 import dog.shebang.data.repository.CategoryRepository
 import dog.shebang.model.Category
 import dog.shebang.model.LoadState
@@ -34,10 +33,10 @@ class MainViewModel @Inject constructor(
         val iconUrl: String?
     )
 
-    data class SignInState(
-        val isNotLoggedIn: Boolean,
-        val errorMessage: String?,
-    )
+    sealed class SignInState {
+        object SignIn : SignInState()
+        data class SignOut(val message: String) : SignInState()
+    }
 
     private val mutableCategoryListFlow =
         MutableStateFlow<LoadState<List<Category>>>(LoadState.Loading)
@@ -57,16 +56,13 @@ class MainViewModel @Inject constructor(
         categoryListFlow
     ) { user, loadState ->
 
-        val errorMessage = if (loadState is LoadState.Error) loadState.throwable.message else null
         val categoryList = if (loadState is LoadState.Loaded) loadState.value else emptyList()
 
-        val isNotLoggedIn =
-            loadState is LoadState.Error && loadState.throwable is FirebaseNotLoggedException
-
-        val signInState = SignInState(
-            isNotLoggedIn = isNotLoggedIn,
-            errorMessage = errorMessage
-        )
+        val signInState = when (loadState) {
+            is LoadState.Loading -> null
+            is LoadState.Loaded -> SignInState.SignIn
+            is LoadState.Error -> SignInState.SignOut(loadState.throwable.message.orEmpty())
+        }
 
         val profile = Profile(
             name = user?.name,
