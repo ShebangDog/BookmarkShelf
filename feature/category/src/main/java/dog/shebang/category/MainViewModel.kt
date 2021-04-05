@@ -25,8 +25,13 @@ class MainViewModel @Inject constructor(
 
     data class UiModel(
         val signInState: SignInState? = null,
-        val profileIconUrl: String? = null,
+        val profile: Profile? = null,
         val categoryList: List<Category> = listOf()
+    )
+
+    data class Profile(
+        val name: String?,
+        val iconUrl: String?
     )
 
     data class SignInState(
@@ -63,12 +68,19 @@ class MainViewModel @Inject constructor(
             errorMessage = errorMessage
         )
 
+        val profile = Profile(
+            name = user?.name,
+            iconUrl = user?.profileIconUrl
+        )
+
         UiModel(
             signInState = signInState,
             categoryList = categoryList,
-            profileIconUrl = user?.profileIconUrl
+            profile = profile
         )
-    }.onStart { emit(UiModel()) }.asLiveData()
+    }.onStart {
+        emit(UiModel())
+    }.asLiveData()
 
     fun selectCategory(name: String) = viewModelScope.launch {
         val category = categoryListFlow

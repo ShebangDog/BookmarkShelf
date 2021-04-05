@@ -68,6 +68,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 if (auth.currentUser == null) showSignInIntent()
             }
 
+            categorySelectorNavigationView.setNavigationItemSelectedListener { item ->
+                item.isCheckable = true
+                item.isChecked = true
+
+                val name = item.title.toString()
+
+                viewModel.selectCategory(name)
+
+                true
+            }
+
             lifecycleScope.launch {
 
                 viewModel.userState.collect {
@@ -92,13 +103,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     categorySelectorNavigationView.updateMenu(newCategoryList)
                 }
 
-                uiModel.profileIconUrl.also {
+                uiModel.profile?.also {
 
-                    Glide.with(layoutHeaderBinding.root)
-                        .load(it)
-                        .placeholder(R.drawable.ic_baseline_android_24)
-                        .circleCrop()
-                        .into(layoutHeaderBinding.profileIconImageView)
+                    layoutHeaderBinding.apply {
+
+                        userNameTextView.text = it.name
+
+                        Glide.with(root)
+                            .load(it.iconUrl)
+                            .placeholder(R.drawable.ic_baseline_android_24)
+                            .circleCrop()
+                            .into(profileIconImageView)
+                    }
                 }
 
                 uiModel.signInState?.also { signInState ->
@@ -121,17 +137,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
                     if (isNotLoggedIn) signInStateSnackbar?.show()
                 }
-            }
-
-            categorySelectorNavigationView.setNavigationItemSelectedListener { item ->
-                item.isCheckable = true
-                item.isChecked = true
-
-                val name = item.title.toString()
-
-                viewModel.selectCategory(name)
-
-                true
             }
         }
     }

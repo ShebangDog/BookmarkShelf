@@ -29,6 +29,7 @@ class DefaultAuthViewModelDelegate : AuthViewModelDelegate {
             try {
                 val userInfo = UserInfo(
                     uid = it.currentUser?.uid!!,
+                    name = it.currentUser?.displayName,
                     profileIconUrl = it.currentUser?.photoUrl?.toString()
                 )
 
