@@ -16,9 +16,9 @@ import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.chip.ChipGroup
 import dagger.hilt.android.AndroidEntryPoint
 import dog.shebang.core.R
-import dog.shebang.core.databinding.LayoutCategoryBottomSheetBinding
 import dog.shebang.model.Category
 import dog.shebang.model.Color
+import dog.shebang.post.databinding.LayoutCategoryBottomSheetBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
