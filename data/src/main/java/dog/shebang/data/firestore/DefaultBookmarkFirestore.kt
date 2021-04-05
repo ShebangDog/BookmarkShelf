@@ -10,15 +10,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
 interface DefaultBookmarkFirestore {
 
-    fun fetchBookmarkList(): Flow<Result<List<Bookmark.DefaultBookmark>>>
+    fun fetchBookmarkList(uid: String): Flow<Result<List<Bookmark.DefaultBookmark>>>
 
-    suspend fun storeBookmark(bookmark: Bookmark.DefaultBookmark)
+    suspend fun storeBookmark(uid: String, bookmark: Bookmark.DefaultBookmark)
 }
 
 class DefaultBookmarkFirestoreImpl @Inject constructor() : DefaultBookmarkFirestore {
@@ -26,41 +24,34 @@ class DefaultBookmarkFirestoreImpl @Inject constructor() : DefaultBookmarkFirest
     private val firestore = Firebase.firestore
 
     @ExperimentalCoroutinesApi
-    override fun fetchBookmarkList(): Flow<Result<List<Bookmark.DefaultBookmark>>> =
-        FirebaseAuthentication.currentUser.flatMapLatest { user ->
-            callbackFlow {
-                val listenerRegistration = try {
-                    val uid = user?.uid ?: throw FirebaseNotLoggedException
+    override fun fetchBookmarkList(uid: String) = callbackFlow {
+        val listenerRegistration = try {
+            firestore.defaultBookmarksRef(uid)
+                .addSnapshotListener { snapshot, exception ->
+                    exception?.run { throw this }
 
-                    firestore.defaultBookmarksRef(uid)
-                        .addSnapshotListener { snapshot, exception ->
-                            exception?.run { throw this }
+                    val entityList =
+                        snapshot?.toObjects(DefaultBookmarkEntity::class.java)
+                    val bookmarkList = entityList
+                        ?.mapNotNull { it.modelOrNull() }
+                        ?: emptyList()
 
-                            val entityList =
-                                snapshot?.toObjects(DefaultBookmarkEntity::class.java)
-                            val bookmarkList = entityList
-                                ?.mapNotNull { it.modelOrNull() }
-                                ?: emptyList()
+                    offer(Result.Success(bookmarkList))
 
-                            offer(Result.Success(bookmarkList))
-
-                        }
-
-                } catch (throwable: Throwable) {
-
-                    offer(Result.Failure<Nothing>(throwable))
-                    null
                 }
 
-                awaitClose { listenerRegistration?.remove() }
-            }
+        } catch (throwable: Throwable) {
+
+            offer(Result.Failure<Nothing>(throwable))
+            null
         }
+
+        awaitClose { listenerRegistration?.remove() }
+    }
 
 
     @ExperimentalCoroutinesApi
-    override suspend fun storeBookmark(bookmark: Bookmark.DefaultBookmark) {
-        val uid = FirebaseAuthentication.currentUser.firstOrNull()?.uid ?: return
-
+    override suspend fun storeBookmark(uid: String, bookmark: Bookmark.DefaultBookmark) {
         firestore.defaultBookmarksRef(uid).add(bookmark)
     }
 

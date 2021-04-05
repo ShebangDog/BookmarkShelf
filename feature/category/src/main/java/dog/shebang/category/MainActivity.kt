@@ -1,5 +1,6 @@
 package dog.shebang.category
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -9,23 +10,27 @@ import androidx.core.view.forEach
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.wada811.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dog.shebang.category.databinding.ActivityMainBinding
-import dog.shebang.data.firestore.FirebaseAuthentication
+import dog.shebang.category.databinding.LayoutDrawerHeaderBinding
+import dog.shebang.core.ext.SnackBarCallback
+import dog.shebang.core.ext.makeSignInSnackbar
 import dog.shebang.model.Category
 import dog.shebang.shelf.ShelfFragmentDirections
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -33,13 +38,23 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val binding: ActivityMainBinding by viewBinding()
     private val viewModel: MainViewModel by viewModels()
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var googleSignInClient: GoogleSignInClient
+    private val auth: FirebaseAuth by lazy { Firebase.auth }
+    private val googleSignInClient: GoogleSignInClient by lazy {
+        getClient(
+            this@MainActivity,
+            getString(R.string.default_web_client_id)
+        )
+    }
+
+    private var signInStateSnackbar: Snackbar? = null
+
+    companion object {
+        const val GOOGLE_AUTH_INTENT_REQUEST: Int = 232
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        auth = Firebase.auth
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.container_fragment) as NavHostFragment
@@ -49,21 +64,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         lifecycle.addObserver(viewModel.lifecycleStateFlow)
 
         binding.apply {
+            val layoutHeaderBinding = layoutHeaderBinding()
+
             topAppBar.setOnClickListener {
                 categoryDrawerLayout.open()
             }
 
-            lifecycleScope.launch {
-                viewModel.selectedCategoryFlow.collect {
-                    navigateToShelfByCategory(navController, it)
-                    categoryDrawerLayout.closeDrawer(categorySelectorNavigationView)
-                }
-            }
-
-            viewModel.uiModel.observe(this@MainActivity) { uiModel ->
-                val newCategoryList = uiModel.categoryList + Category.defaultCategory
-
-                categorySelectorNavigationView.updateMenu(newCategoryList)
+            layoutHeaderBinding.profileIconImageView.setOnClickListener {
+                if (auth.currentUser == null) showSignInIntent()
             }
 
             categorySelectorNavigationView.setNavigationItemSelectedListener { item ->
@@ -77,9 +85,65 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 true
             }
 
-            Snackbar.make(root, "aaa", Snackbar.LENGTH_INDEFINITE).setAction(
-                "logout"
-            ) { FirebaseAuthentication.signOut() }.show()
+            lifecycleScope.launch {
+
+                viewModel.userState.collect {
+                    viewModel.updateUserData(it?.uid)
+                }
+            }
+
+            lifecycleScope.launch {
+
+                viewModel.selectedCategoryFlow.collect {
+                    navigateToShelfByCategory(navController, it)
+                    categoryDrawerLayout.closeDrawer(categorySelectorNavigationView)
+                }
+
+            }
+
+            viewModel.uiModel.observe(this@MainActivity) { uiModel ->
+
+                uiModel.categoryList.also {
+                    val newCategoryList = it + Category.defaultCategory
+
+                    categorySelectorNavigationView.updateMenu(newCategoryList)
+                }
+
+                uiModel.profile?.also {
+
+                    layoutHeaderBinding.apply {
+
+                        userNameTextView.text = it.name
+
+                        Glide.with(root)
+                            .load(it.iconUrl)
+                            .placeholder(R.drawable.ic_baseline_android_24)
+                            .circleCrop()
+                            .into(profileIconImageView)
+                    }
+                }
+
+                uiModel.signInState?.also { signInState ->
+                    val (
+                        isNotLoggedIn,
+                        errorMessage,
+                    ) = signInState
+
+                    signInStateSnackbar?.dismiss()
+                    signInStateSnackbar = makeSignInSnackbar(
+                        errorMessage.orEmpty(),
+                        object : SnackBarCallback() {
+                            override fun onDismissed(snackbar: Snackbar?, event: Int) {
+                                snackbar?.removeCallback(this)
+                            }
+                        }
+                    ) {
+                        showSignInIntent()
+                    }
+
+                    if (isNotLoggedIn) signInStateSnackbar?.show()
+                }
+            }
         }
     }
 
@@ -119,38 +183,29 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onStart() {
         super.onStart()
 
-        lifecycleScope.launch {
-            val user = FirebaseAuthentication.currentUser.firstOrNull()
+        if (auth.currentUser != null) return
 
-            if (user == null) {
-                googleSignInClient = FirebaseAuthentication.getClient(
-                    this@MainActivity,
-                    getString(R.string.default_web_client_id)
-                )
-
-                showSignInIntent()
-            }
-        }
+        showSignInIntent()
     }
 
     private fun showSignInIntent() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(
             signInIntent,
-            FirebaseAuthentication.GOOGLE_AUTH_INTENT_REQUEST
+            GOOGLE_AUTH_INTENT_REQUEST
         )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == FirebaseAuthentication.GOOGLE_AUTH_INTENT_REQUEST) {
+        if (requestCode == GOOGLE_AUTH_INTENT_REQUEST) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
                 val idToken = account?.idToken ?: return
 
-                FirebaseAuthentication.signInWithGoogle(idToken)
+                signInWithGoogle(idToken)
             } catch (e: ApiException) {
 
             }
@@ -165,5 +220,27 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )
 
         navController.navigate(action)
+    }
+
+    private fun (ActivityMainBinding).layoutHeaderBinding(): LayoutDrawerHeaderBinding {
+        val layoutHeader = categorySelectorNavigationView.getHeaderView(0)
+
+        return LayoutDrawerHeaderBinding.bind(layoutHeader)
+    }
+
+    private fun signInWithGoogle(idToken: String) {
+
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+    }
+
+    private fun getClient(context: Context, clientId: String): GoogleSignInClient {
+        val googleSignInOptions =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(clientId)
+                .requestEmail()
+                .build()
+
+        return GoogleSignIn.getClient(context, googleSignInOptions)
     }
 }

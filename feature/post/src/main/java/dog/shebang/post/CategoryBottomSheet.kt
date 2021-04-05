@@ -9,6 +9,7 @@ import androidx.annotation.StyleRes
 import androidx.core.view.children
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
@@ -18,6 +19,8 @@ import dog.shebang.core.R
 import dog.shebang.core.databinding.LayoutCategoryBottomSheetBinding
 import dog.shebang.model.Category
 import dog.shebang.model.Color
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CategoryBottomSheet(
@@ -45,6 +48,12 @@ class CategoryBottomSheet(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        lifecycleScope.launch {
+            viewModel.currentFirebaseUserState.collect {
+                viewModel.updateUserData(it?.uid)
+            }
+        }
 
         binding.apply {
             viewModel.categoryListLiveData.observe(viewLifecycleOwner) { loadState ->
