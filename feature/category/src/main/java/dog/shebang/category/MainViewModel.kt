@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dog.shebang.core.AuthViewModelDelegate
 import dog.shebang.core.LifecycleStateFlow
 import dog.shebang.core.bufferUntilStarted
+import dog.shebang.data.auth.AuthViewModelDelegate
 import dog.shebang.data.firestore.FirebaseNotLoggedException
 import dog.shebang.data.repository.CategoryRepository
 import dog.shebang.model.Category

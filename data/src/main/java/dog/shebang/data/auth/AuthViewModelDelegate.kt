@@ -1,18 +1,13 @@
-package dog.shebang.core
+package dog.shebang.data.auth
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import dog.shebang.model.UserInfo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import javax.inject.Singleton
 
 interface AuthViewModelDelegate {
 
@@ -47,13 +42,4 @@ class DefaultAuthViewModelDelegate : AuthViewModelDelegate {
     @ExperimentalCoroutinesApi
     override val userInfoFlow: Flow<UserInfo?> = firebaseUserFlow
 
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-object AuthViewModelDelegateModule {
-
-    @Singleton
-    @Provides
-    fun provideAuthViewModelDelegate(): AuthViewModelDelegate = DefaultAuthViewModelDelegate()
 }

@@ -5,7 +5,7 @@ import androidx.savedstate.SavedStateRegistryOwner
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import dog.shebang.core.AuthViewModelDelegate
+import dog.shebang.data.auth.AuthViewModelDelegate
 import dog.shebang.data.repository.BookmarkRepository
 import dog.shebang.data.repository.CategoryRepository
 import dog.shebang.data.repository.MetadataRepository
